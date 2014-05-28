@@ -1,3 +1,18 @@
+/*
+A general use default setup for using Utopia.
+Utopia enables the sharing of code between all players in a LAN. 
+
+
+Installation
+
+1. You need to install this to run the present file: 
+https://github.com/muellmusik/Utopia
+
+2. Erase unit_tests from the source folder before recompiling the library.
+
+Wed, May 28 2014, 17:29 EEST
+*/
+
 (
 s.options.numBuffers = 8192;
 s.options.numPrivateAudioBusChannels = 8192;
@@ -28,7 +43,7 @@ ServerTree.add(~bvFunc);
 
 
 // discover others
-~win = Window("BEERtopia").front;
+~win = Window("Utopia").front;
 ~win.bounds = ~win.bounds.moveTo(0, 600);
 ~win.layout = VLayout.new.add(~listView = ListView.new);
 
