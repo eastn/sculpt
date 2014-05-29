@@ -35,6 +35,10 @@ GecoMapperSingle : UniqueWindow {
 					Button().states_([["test this osc message"]])
 					.action_({
 						this.testOscMessage(pathSelectionView.item);
+					}),
+					Button().states_([["all"], ["solo"], ["mute"]])
+					.action_({ | me |
+						this.perform([\playAll, \playSolo, \muteThis][me.value]);
 					})
 				),
 				actionEditorView　= TextView().font_(Font.monospace))
@@ -42,9 +46,9 @@ GecoMapperSingle : UniqueWindow {
 		this.makePaths;
 		this.makeActions;
 		actionEditorView.keyDownAction = {
-			editedPath = pathSelectionView.item.asSymbol;
+			{editedPath = pathSelectionView.item.asSymbol;
 			editedActionString = actionEditorView.string;
-			actions[editedPath] = editedActionString;
+			actions[editedPath] = editedActionString}.defer(0.001);
 		};
 		pathSelectionView.action = { | me |
 			this.submitPreviousPath;
@@ -54,10 +58,20 @@ GecoMapperSingle : UniqueWindow {
 		editedActionString = actions[editedPath];
 		actionEditorView.string = editedActionString;
 		actions keysValuesDo: { | key, value |
-			OSCdef(key, value, key);
+			OSCdef(key, value.interpret, key);
 		};
 	}
 
+	playAll {
+		;
+	}
+
+	playSolo {
+		thisMethod.name.postln;
+	}
+	muteThis {
+		thisMethod.name.postln;
+	}
 	testOscMessage { | message |
 		this.submitPreviousPath;
 		NetAddr.localAddr.sendMsg(message, 10.rand);
