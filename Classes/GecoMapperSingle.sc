@@ -12,7 +12,7 @@ GecoMapperSingle : UniqueWindow {
 
 	var pathSelectionView, actionEditorView;
 	var <paths, <actions, submitButton;
-	var <previousPath, <previousActionString;
+	var <editedPath, <editedActionString;
 
 	*initClass {
 		StartUp add: { this.default };
@@ -27,22 +27,50 @@ GecoMapperSingle : UniqueWindow {
 	initGecoMapperSingle {
 		this.right(900).height_(300);
 		this.window.view.layout = HLayout(
-			pathSelectionView = ListView(),
-			[VLayout(
-				submitButton = Button().states_([["submit"]])
-				.action_({ this.updateOSCdef }),
-				actionEditorView　= TextView().font_(Font.monospace)), s: 2]
+			pathSelectionView = ListView().fixedWidth_(160),
+			VLayout(
+				HLayout(
+					submitButton = Button().states_([["submit"]])
+					.action_({ this.updateOSCdef }),
+					Button().states_([["test this osc message"]])
+					.action_({
+						this.testOscMessage(pathSelectionView.item);
+					})
+				),
+				actionEditorView　= TextView().font_(Font.monospace))
 		);
 		this.makePaths;
 		this.makeActions;
-		pathSelectionView.action = { | me |
-			//		this.submitPreviousPath;
-			previousPath = me.item;
-			//			previousActionString = actionEditorView.string;
-			previousActionString = actions[previousPath];
-			actionEditorView.string = previousActionString;
+		actionEditorView.keyDownAction = {
+			editedPath = pathSelectionView.item.asSymbol;
+			editedActionString = actionEditorView.string;
+			actions[editedPath] = editedActionString;
 		};
-		pathSelectionView.valueAction_(0);
+		pathSelectionView.action = { | me |
+			this.submitPreviousPath;
+			actionEditorView.string = actions[me.item];
+		};
+		editedPath = pathSelectionView.item;
+		editedActionString = actions[editedPath];
+		actionEditorView.string = editedActionString;
+		actions keysValuesDo: { | key, value |
+			OSCdef(key, value, key);
+		};
+	}
+
+	testOscMessage { | message |
+		this.submitPreviousPath;
+		NetAddr.localAddr.sendMsg(message, 10.rand);
+	}
+
+	submitPreviousPath {
+		editedPath !? {
+			OSCdef(editedPath, editedActionString.interpret, editedPath);
+		}
+	}
+
+	updateCurrentPath { | path |
+		actions[path] = editedActionString;
 	}
 
 	makePaths {
@@ -60,12 +88,6 @@ GecoMapperSingle : UniqueWindow {
 	makeActions {
 		actions = IdentityDictionary();
 		paths do: { | p | actions[p] = "{ | ... args | args.postln; }" }
-	}
-
-	submitPreviousPath {
-		previousPath !? {
-			OSCdef(previousPath, previousActionString.interpret, previousPath);
-		}
 	}
 
 	updateOSCdef {
