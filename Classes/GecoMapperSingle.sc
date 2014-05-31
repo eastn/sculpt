@@ -39,7 +39,9 @@ GecoMapperSingle : UniqueWindow {
 					Button().states_([["all"], ["solo"], ["mute"]])
 					.action_({ | me |
 						this.perform([\playAll, \playSolo, \muteThis][me.value]);
-					})
+					}),
+					Button().states_([["open"]]).action_({ this.open }),
+					Button().states_([["save"]]).action_({ this.save })
 				),
 				actionEditorView　= TextView().font_(Font.monospace))
 		);
@@ -63,7 +65,7 @@ GecoMapperSingle : UniqueWindow {
 	}
 
 	playAll {
-		;
+		
 	}
 
 	playSolo {
@@ -108,5 +110,33 @@ GecoMapperSingle : UniqueWindow {
 		[this, thisMethod.name, pathSelectionView.item, 
 			actionEditorView.string].postln;
 		actions[pathSelectionView.item] = actionEditorView.string;
+	}
+
+	save {
+		paths.collect({ | p | [p, actions[p]]})
+		.writeArchive(this.defaultSetupFilePath);
+		"GECO OSC SETUP SAVED IN USER APP SUPPORT DIRECTORY".postln;
+	}
+
+	open {
+		//		Document.open(this.defaultSetupFilePath);
+		var data;
+		data = this.defaultSetupFilePath.load;
+		//		data.postln;
+		paths = data collect: _[0];
+		actions = IdentityDictionary();
+		data do: { | pathAction |
+			actions[pathAction[0]] = pathAction[1];
+		};
+		this.changed(\everything);
+		"LOADED CONFIG".postln;
+		data.asCompileString.postln;
+		paths.asCompileString.postln;
+		actions.asCompileString.postln;
+		actions do: _.postln;
+	}
+
+	defaultSetupFilePath {
+		^Platform.userAppSupportDir +/+ "GECO_OSC_SETUP.sctxar";
 	}
 }
