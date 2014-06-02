@@ -23,14 +23,18 @@ Includes:
 ** Software
 
 *** SuperCollider
+
+Download SuperCollider from: http://supercollider.sourceforge.net/downloads/
 *** SuperCollider Libraries:
   - Utopia (https://github.com/muellmusik/Utopia)
   - tiny-sc (https://github.com/iani/tiny-sc)
   - sculpt (This library: https://github.com/eastn/sculpt, folder: Classes)
 *** ChucK
 
-This library, folder: ChucK
+Download ChucK from: http://chuck.cs.princeton.edu/release/
 
-*** LeapMotion Configuration files
+ChucK code is found in this library inside folder: ChucK.
 
-This library, folder: LeapMotionSetup.
+*** LeapMotion Configuration Files
+
+Files for configuring LeapMotion so as to send OSC to SuperCollider using the application Geco are located in the present library inside folder: LeapMotionSetup.
