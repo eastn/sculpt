@@ -1,0 +1,23 @@
+#+TITLE: sculpt
+
+Sculpting shapes and sounds with gestures using LeapMotion.
+Residency project of Konstantinos Vasilakos.
+
+Includes:
+- SuperCollider classes and workspace files.
+- ChucK code files.
+- Config files for LeapMotion.
+- Design and help doc.
+
+** Hardware
+
+- ca 5 contact piezos, connected to any surface of objects, big or small
+  - Note: the piezos should be soldered to common audio (mike) cable leading to Arduino (soldering/breadboard) or sound card (TS 0.5" input jack).
+- 1 Arduino for triggering from piezos
+- 1 Sound card for audio input from piezos, and for sound output.
+
+- Laptops / macmini
+
+** Software
+
+- SuperCollider running: Utopia, tiny-sc, leap-sc
