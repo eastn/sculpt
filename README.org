@@ -13,7 +13,7 @@ Includes:
 
 - ca 5 contact piezos, connected to any surface of objects, big or small
   - Note: the piezos should be soldered to common audio (mike) cable leading to Arduino (soldering/breadboard) or sound card (TS 0.5" input jack).
-- 1 Arduino for triggering from piezos
+- 1 Arduino board for triggering from piezos
 - 1 Sound card for audio input from piezos, and for sound output.
 
 - Laptops / macmini
