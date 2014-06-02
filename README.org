@@ -18,6 +18,19 @@ Includes:
 
 - Laptops / macmini
 
+
+
 ** Software
 
-- SuperCollider running: Utopia, tiny-sc, leap-sc
+*** SuperCollider
+*** SuperCollider Libraries:
+  - Utopia (https://github.com/muellmusik/Utopia)
+  - tiny-sc (https://github.com/iani/tiny-sc)
+  - sculpt (This library: https://github.com/eastn/sculpt, folder: Classes)
+*** ChucK
+
+This library, folder: ChucK
+
+*** LeapMotion Configuration files
+
+This library, folder: LeapMotionSetup.
