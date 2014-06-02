@@ -20,4 +20,8 @@ Includes:
 
 ** Software
 
-- SuperCollider running: Utopia, tiny-sc, leap-sc
+- SuperCollider
+- External libraries for SuperCollider:
+  - Utopia ( https://github.com/muellmusik/Utopia )
+  - tiny-sc ( https://github.com/iani/tiny-sc )
+  - sculpt (this library: https://github.com/eastn/sculpt)
