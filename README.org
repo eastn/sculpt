@@ -39,4 +39,4 @@ Files for configuring LeapMotion so as to send OSC to SuperCollider using the ap
 
 *** ChucK - SuperCollider Code
 
-Some coding snippets to test OSC communication between ChucK & SuperCollider. Downloaded from:http://www.ixi-software.net/workshops/files.php
+Some code to test OSC communication between ChucK & SuperCollider. Downloaded from: http://www.ixi-software.net/workshops/files.php
