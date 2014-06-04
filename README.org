@@ -36,7 +36,3 @@ ChucK code is found in this library inside folder: ChucK.
 *** LeapMotion Configuration Files
 
 Files for configuring LeapMotion so as to send OSC to SuperCollider using the application Geco are located in the present library inside folder: LeapMotionSetup.
-
-*** ChucK - SuperCollider Code
-
-Some code to test OSC communication between ChucK & SuperCollider. Downloaded from: http://www.ixi-software.net/workshops/files.php

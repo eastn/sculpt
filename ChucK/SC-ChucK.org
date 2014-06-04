@@ -1,0 +1,3 @@
+* ChucK - SuperCollider Code
+
+Some code to test OSC communication between ChucK & SuperCollider. Downloaded from: http://www.ixi-software.net/workshops/files.php
