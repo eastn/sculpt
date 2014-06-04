@@ -6,5 +6,5 @@ Some code to test OSC communication between ChucK & SuperCollider. Downloaded fr
 
 *** SuperCollider meets WaveGuide
 
-ModalBar is a ugen part of WaveGuide synthesis, which will be used as the synthesis engine of the Sculpt.
-This is the first experiment using ChucK and WaveGuide, it includes two files, a chuck and a SuperCollider documents that implements an OSC communication between the former and the later. You may find these two within the ChucK folder of the Sculpt repository, as usual.
+ModalBar is a ugen part of WaveGuide synthesis in ChucK which will be used as the synthesis engine of the Sculpt.
+This is the first experiment using ChucK and WaveGuide, it includes two files a chuck and a SuperCollider document that implements an OSC communication between the former and the later. SuperCollider controls the parameters of the ModalBar. You may find these two docs within the ChucK folder of the Sculpt repository, as usual.
