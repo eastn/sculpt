@@ -1,3 +1,65 @@
-* ChucK - SuperCollider Code
+#+BEGIN_EXAMPLE
+Using ChucK as sound server from SuperCollider
+                         or:
+Using SuperCollider as language environment for ChucK.
+#+END_EXAMPLE
+
+Started: [2014-06-03 Tue]
+
+* First steps
+:PROPERTIES:
+:DATE:     <2014-06-05 Thu 09:43>
+:END:
 
 Some code to test OSC communication between ChucK & SuperCollider. Downloaded from: http://www.ixi-software.net/workshops/files.php
+
+* Patterns
+:PROPERTIES:
+:DATE:     <2014-06-05 Thu 09:44>
+:END:
+
+Define a new event type, initially called =\chuckTest= that plays like this:
+
+#+BEGIN_EXAMPLE
+NetAddr("127.0.0.1", 6449)
+.sendMsg(
+    <symbol: instrument_name>,
+    <integer: preset>,
+    <float: freq>, // following parameters depend on instrument
+                   // example here is from ModalBar
+    <float: par1>, // stick hardness
+    <float: par2>, // strike position
+    <float: par3>, // vibrato gain
+    <float: par4>, // vibrato freq
+    <float: par5>, // vol (no effect)
+    <float: par6>, // direct gain
+    <float: par7>  // master gain
+);
+#+END_EXAMPLE
+
+See SC Help, Class =Event=, class method =addEventType=.
+
+: *addEventType(type, func)
+
+Draft for =func=:
+
+#+BEGIN_EXAMPLE
+{
+NetAddr("127.0.0.1", 6449).sendMsg(
+   ~instrument,
+   ~preset ? 0,
+   ~freq, // need to find how to eval ~freq to get the final value
+   ~hardness ? 0.5,
+   ~strikePos ? 0.5,
+   ~vibrGain ? 0.1,
+   ~vibrFreq ? 5,
+   ~vol ? 1,
+   ~directGain ? 0.5,
+   ~masterGain ? 0.5
+)
+}
+#+END_EXAMPLE
+
+Test this eventType with:
+
+: Pbind(\type, \chuckTest, degree: 0).play;
