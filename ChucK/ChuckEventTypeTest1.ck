@@ -17,7 +17,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, f" ) @=> OscEvent oe;
+recv.event( "/bar, i, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -29,15 +29,17 @@ while( true )
     while ( oe.nextMsg() != 0 )
     { 
         // getFloat fetches the expected float (as indicated by "f")
-        oe.getFloat(); // => buf.play;
+        // oe.getFloat(); // => buf.play;
         // print
         <<< "got (via OSC):", "something eheh heh"  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
-        Math.random2( 0, 8 ) => bar.preset;
-        Math.random2f( 0, 1 ) => bar.stickHardness;
-        Math.random2f( 0, 1 ) => bar.strikePosition;
+        oe.getInt() => bar.preset;
+        // set freq
+        oe.getFloat() => bar.freq;
+        oe.getFloat() => bar.stickHardness;
+        oe.getFloat() => bar.strikePosition;
         Math.random2f( 0, 1 ) => bar.vibratoGain;
         Math.random2f( 0, 60 ) => bar.vibratoFreq;
         Math.random2f( 0, 1 ) => bar.volume;
@@ -55,9 +57,6 @@ while( true )
         <<< "direct gain:", bar.directGain() >>>;
         <<< "master gain:", bar.masterGain() >>>;
         
-        // set freq
-        scale[Math.random2(0,scale.cap()-1)] => int winner;
-        57 + Math.random2(0,2)*12 + winner => Std.mtof => bar.freq;
         // go
         .8 => bar.noteOn;
     }

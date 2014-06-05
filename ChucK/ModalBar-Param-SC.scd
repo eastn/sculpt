@@ -20,7 +20,6 @@ Adding parameters to the ModalBar message.
 		);
 		durations.next.wait;
 	}
-
 }.fork
 
 //:
