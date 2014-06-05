@@ -41,7 +41,7 @@ See SC Help, Class =Event=, class method =addEventType=.
 
 : *addEventType(type, func)
 
-Draft for =func=:
+The new event type should be based on the default =note= event type, which is currently found in lines 476 to 557 of =Event.sc=.  The reason is that in this way it can use all of the note's musical parameter infrastructure (octave, scale, degree, note, midinote etc).  Unfortunately, this function is (a) complex (b) difficult to modify (not modular). Simple, fictitious template to orient the coding:
 
 #+BEGIN_EXAMPLE
 {
@@ -63,3 +63,28 @@ NetAddr("127.0.0.1", 6449).sendMsg(
 Test this eventType with:
 
 : Pbind(\type, \chuckTest, degree: 0).play;
+
+Possibly, =~freq= can be got like this:
+
+#+BEGIN_EXAMPLE
+var freqs, lag, /* strum, */ server;
+var msgFunc, instrumentName, bndl;
+
+freqs = ~detunedFreq.value;
+if (freqs.isRest.not) {
+// msgFunc gets the synth's control values from the Event
+msgFunc = ~getMsgFunc.valueEnvir;
+instrumentName = ~synthDefName.valueEnvir;
+// update values in the Event that may be determined by functions
+~freq = freqs;
+~amp = ~amp.value;
+offset = ~timingOffset;
+// strum = ~strum;
+~server = server;
+~isPlaying = true;
+// compute the control values and generate OSC commands
+bndl = msgFunc.valueEnvir;
+bndl = [instrumentName] ++ bndl;
+#+END_EXAMPLE
+
+Next steps: Find out and test how =msgFunc= works, write your own version for =getMsgFunc=.
