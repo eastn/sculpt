@@ -40,9 +40,18 @@ Edef(\chuckTest).play;
 // Testing \chuckInstrument
 Edef(\chuckTest, (
 	type: \chuckInstrument,  
-	degree: (-10..2).prand, dur: 0.25, 
+	degree: (-10..2).prand, dur: [0.25 pn: 15, 0.125 pn: 5, 1, 0.5].prand, 
 	hardness: [0.001, 0.002].pseq,
 	instrument: ['/bar', '/silence'].prand,
 	preset: 1
 )).play;
 
+//:
+\chuckTest =< (degree: (-10..20).prand);
+
+//:
+\somethingElse =< (degree: (-10..20).prand);
+
+Edef(\somethingElse).play;
+
+//:
