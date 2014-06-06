@@ -4,6 +4,13 @@ Each in a separate file.
 
 Each controlled from SC via OSC.
 
+* Methodology
+
+1. Tweak the sc instrument driver for sc patterns by editing file InitChuckEventTypes.sc, and tweaking method *addGenericInstrument to include just the parameters needed, taking care that Ints must be Integers and Floats must be Floats, strictly.
+   - Possibly add new methods by cloning *addGenericInstrument, for instruments that require different parameters.
+2. Write the ck patch file to receive OSC for that instrument and play with ChucK.  To do this, clone file ChuckInstrumentTemplate.ck
+3. Check that this works by modifying the examples in ChuckPatternTest1.scd.
+
 Template: ChucKInstrumentTemplate.ck
 
 Here in a table to work in parallel: Iani - Konstantinos

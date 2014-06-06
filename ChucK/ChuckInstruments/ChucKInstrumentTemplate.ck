@@ -17,7 +17,7 @@ recv.event( "/bar, i, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 // infinite time loop
 while( true )
 {
-    oe => now;   
+    oe => now;
     while ( oe.nextMsg() != 0 )
     { 
        oe.getInt() => bar.preset;
