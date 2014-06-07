@@ -31,17 +31,17 @@ GecoMapperSingle : UniqueWindow {
 			VLayout(
 				HLayout(
 					submitButton = Button().states_([["submit"]])
-					.action_({ this.updateOSCdef }),
+					.maxHeight_(23).action_({ this.updateOSCdef }),
 					Button().states_([["test this osc message"]])
-					.action_({
+					.maxHeight_(23).action_({
 						this.testOscMessage(pathSelectionView.item);
 					}),
 					Button().states_([["all"], ["solo"], ["mute"]])
-					.action_({ | me |
+					.maxHeight_(23).action_({ | me |
 						this.perform([\playAll, \playSolo, \muteThis][me.value]);
 					}),
-					Button().states_([["open"]]).action_({ this.open }),
-					Button().states_([["save"]]).action_({ this.save })
+					Button().states_([["open"]]).maxHeight_(23).action_({ this.open }),
+					Button().states_([["save"]]).maxHeight_(23).action_({ this.save })
 				),
 				actionEditorView　= TextView().font_(Font.monospace))
 		);
