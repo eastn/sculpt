@@ -107,9 +107,8 @@ GecoMapperSingle : UniqueWindow {
 	}
 
 	updateOSCdef {
-		[this, thisMethod.name, pathSelectionView.item, 
-			actionEditorView.string].postln;
 		actions[pathSelectionView.item] = actionEditorView.string;
+		this.submitPreviousPath;
 	}
 
 	save {
