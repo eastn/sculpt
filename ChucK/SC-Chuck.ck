@@ -2,7 +2,7 @@
 // the patch
 sndbuf buf => dac;
 // load the file
-"triangle.aiff" => buf.read;
+"../Users/KV/Documents/Dev/Projects/sculpt/Resources/snare.wav" => buf.read;
 // don't play yet
 0 => buf.play; 
 
