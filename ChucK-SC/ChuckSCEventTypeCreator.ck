@@ -1,5 +1,3 @@
-// STK ModalBar
-
 // This chuck patch notifies SuperCollider when it starts,
 // and sends to SC the format of the message that it expects to play
 // its instrument.  SC then constructs a eventType on the fly for playing
