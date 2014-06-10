@@ -1,17 +1,18 @@
 /*
-Create Event and add types for Pbind on the fly, based on specifications sent by ChucK. 
+Create Event and add types for Pbind on the fly, 
+based on specifications sent by ChucK. 
 
-See: InstrNotifierPatch.ck
+See file ChuckSCEventTypeCreator.org for instructions.
 
 Fri, Jun  6 2014, 19:38 EEST
 
 */
 
-ChuckInstrRegistry {
+ChuckSCEventTypeCreator {
 
 	*initClass {
 		StartUp add: {
-			this.initChuckInstrRegistry;
+			this.initChuckSCEventTypeCreator;
 		}
 	}
 
