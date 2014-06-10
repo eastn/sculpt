@@ -18,6 +18,11 @@ Some code to test OSC communication between ChucK & SuperCollider. Downloaded fr
 :DATE:     <2014-06-05 Thu 09:44>
 :END:
 
+** DONE Chuck event type for patterns
+CLOSED: [2014-06-10 Tue 18:26]
+:PROPERTIES:
+:DATE:     <2014-06-10 Tue 18:26>
+:END:
 Define a new event type, initially called =\chuckTest= that plays like this:
 
 #+BEGIN_EXAMPLE
@@ -88,3 +93,10 @@ bndl = [instrumentName] ++ bndl;
 #+END_EXAMPLE
 
 Next steps: Find out and test how =msgFunc= works, write your own version for =getMsgFunc=.
+
+** STARTED Send event type params Chuck->SC
+:PROPERTIES:
+:DATE:     <2014-06-10 Tue 18:27>
+:END:
+
+Write the event type parameter specifications in ChucK and send them over to SuperCollider.  Have SuperCollider create a new event type from the specs received from ChucK.  Thus it is not necessary to code a new event type in SuperCollider, but only in ChucK.
