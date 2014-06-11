@@ -16,7 +16,7 @@ ChuckSCEventTypeCreator {
 		}
 	}
 
-	*initChuckInstrRegistry {
+	*initChuckSCEventTypeCreator {
 		OSCFunc({ | msg |
 			this.parseMessageAndMakeInstrument(msg);
 		}, '/c_instr');
