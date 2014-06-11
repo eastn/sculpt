@@ -9,27 +9,30 @@ Procedure:
 
 The following defines the pattern interface (control parameters) for the instrument:
 
-"/bar,i:preset,f:freq,f:hardness,f:position,f:vol" => string instrTriggerMessage;
+: "/bar,i:preset,f:freq,f:hardness,f:position,f:vol" => string instrTriggerMessage;
 
-This will be sent to SC with OSC message "/c_instr", here :
-sender.startMsg("/c_instr, s");
+This will be sent to SC with OSC message =/c_instr=, here :
+
+: sender.startMsg("/c_instr, s");
 
 SC receives the above message and defines the new event type when you run the patch MyInstrument.ck in ChucK.  This is done in SuperCollider through class ChuckSCEventTypeCreator (see file: "ChuckSCEventTypeCreator.sc").  This class configures itself at StartUp time to listen to the message "/c_instr", so it is not necessary to do anything for it to run.  Just running the ChucK patch MyInstrument.ck is enough.
 
 However, when you edit the parameters of the pattern in the ChucK patch, you must also edit the specifications for the OSC responder in Chuck, which are in this line:
 
-recv.event( "/bar, i, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+: recv.event( "/bar, i, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 You must edit the specification string to match the name of the instrumetn (/bar), and the number and types of the parameters expected.  These must match fully with the parameters in the specification string above ("instrTriggerMessage").
 
 Also, you must edit the patch in the while (true) loop so that ChucK receives and uses correctly all the parameters received through the OSC message. This is in lines:
 
+#+BEGIN_EXAMPLE
        presetNum => bar.preset;
 
        oe.getFloat() => bar.stickHardness;
        oe.getFloat() => bar.strikePosition;
        ...
        etc.
+#+END_EXAMPLE
 
 ================================================================
 
