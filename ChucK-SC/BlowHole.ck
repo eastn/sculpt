@@ -40,16 +40,26 @@ while( true )
     oe => now;   
     // grab the next message from the queue. 
     while ( oe.nextMsg() != 0 )
-    { 
+  { 
         // getFloat fetches the expected float (as indicated by "f")
         //oe.getInt() => int presetNum;
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
-        oe.getFloat() => float freq;
-        <<< "got (via OSC): FREQ", freq  >>>;
+       oe.getFloat() => float freq;
+       <<< "got (via OSC): FREQ", freq  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
+        
+  //  Math.random2f( 0, 1 ) => bar.reed;
+   // Math.random2f( 0, 1 ) => bar.noiseGain;
+   // Math.random2f( 0, 1 ) => bar.tonehole;
+   // Math.random2f( 0, 1 ) => bar.vent;
+   // Math.random2f( 0, 1 ) => bar.pressure;
+ //   Math.random2f( 0, 1 ) => bar.startBlowing;
+  //  Math.random2f( 0, 1 ) => bar.stopBlowing;
+  //  Math.random2f( 0, 5 ) => bar.rate;
+
         
        oe.getFloat() => bar.reed;
        oe.getFloat() => bar.noiseGain;
@@ -59,6 +69,7 @@ while( true )
        oe.getFloat() => bar.startBlowing;
        oe.getFloat() => bar.stopBlowing;
        oe.getFloat() => bar.rate;
+                
         
         // print
         <<< "---", "" >>>;
@@ -67,15 +78,15 @@ while( true )
         <<< "tonehole:", bar.tonehole() >>>;
         <<< "vent:", bar.vent() >>>;
         <<< "pressure:", bar.pressure() >>>;
-        //<<< "startBlowing:", bar.startBlowing() >>>; //Write Only!
-        //<<< "stopBlowing:", bar.stopBlowing() >>>;   //Write Only!
         <<< "rate:", bar.rate() >>>;
         
         // set freq
         freq => bar.freq;
+        // scale[Math.random2(0,scale.cap()-1)] => int winner;
+    // 57 + Math.random2(0,2)*12 + winner => Std.mtof => bar.freq;
         // go
         .8 => bar.noteOn;
     }
     // advance time
-    // .5::second => now;
+     .1::second => now;
 }

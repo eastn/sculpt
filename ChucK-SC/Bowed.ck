@@ -4,14 +4,15 @@
 // this instrument with patterns. 
 
 // patch
-Bowed bar => dac;
+Bowed bowed => dac;
 
-////////////////// OSC receiver ////////////////
-// create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/bar, f:bowPressure, f:bowPosition, f:vibratoFreq, f:vibratoGain, f:volume, f:startBowing, f:stopBowing, f:rate" => string instrTriggerMessage;
+"/bowed, f:freq, f:bowPressure, f:bowPosition, f:vibratoFreq, f:vibratoGain, f:volume, f:startBowing, f:stopBowing, f:rate" => string instrTriggerMessage;
+
+////////////////// OSC sender ////////////////
+// create our OSC sender
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -25,6 +26,9 @@ sender.startMsg("/c_instr, s");
 // Send the string declaring the format used to receive trigger messages
 sender.addString(instrTriggerMessage);
 
+////////////////// OSC receiver ////////////////
+// create our OSC receiver
+
 OscRecv recv;
 // use port 6449
 6449 => recv.port;
@@ -32,7 +36,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/bowed, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -51,30 +55,30 @@ while( true )
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => bar.bowPressure;
-        oe.getFloat() => bar.bowPosition;
-        oe.getFloat() => bar.vibratoFreq;
-        oe.getFloat() => bar.vibratoGain;
-        oe.getFloat() => bar.volume;
-        oe.getFloat() => bar.startBowing;
-        oe.getFloat() => bar.stopBowing;
-        //oe.getFloat() => bar.rate; // error: 'Bowed' has no member 'rate'; however, Bowed appears to have a rate control indeed, can't rationalise.
+        oe.getFloat() => bowed.bowPressure;
+        oe.getFloat() => bowed.bowPosition;
+        oe.getFloat() => bowed.vibratoFreq;
+        oe.getFloat() => bowed.vibratoGain;
+        oe.getFloat() => bowed.volume;
+        oe.getFloat() => bowed.startBowing;
+        oe.getFloat() => bowed.stopBowing;
+        //oe.getFloat() => bowed.rate;
         
         // print
         <<< "---", "" >>>;
-        <<< "bowPressure:", bar.bowPressure() >>>;
-        <<< "bowPosition:", bar.bowPosition() >>>;
-        <<< "vibratoFreq:", bar.vibratoFreq() >>>;
-        <<< "vibratoGain:", bar.vibratoGain() >>>;
-        <<< "volume:", bar.volume() >>>;
-      //<<< "startBlowing:", bar.startBowing() >>>; //Write Only!
-      //<<< "stopBlowing:", bar.stopBowing() >>>;   //Write Only!
-       //<<< "rate:", bar.rate() >>>;
+        <<< "bowPressure:", bowed.bowPressure() >>>;
+        <<< "bowPosition:", bowed.bowPosition() >>>;
+        <<< "vibratoFreq:", bowed.vibratoFreq() >>>;
+        <<< "vibratoGain:", bowed.vibratoGain() >>>;
+        <<< "volume:", bowed.volume() >>>;
+      //<<< "startBlowing:", bowed.startBowing() >>>; //Write Only!
+      //<<< "stopBlowing:", bowed.stopBowing() >>>;   //Write Only!
+        //<<< "rate:", bowed.rate() >>>;
         
         // set freq
-        freq => bar.freq;
+        // freq => bowed.freq;
         // go
-        .8 => bar.noteOn;
+        .8 => bowed.noteOn;
     }
     // advance time
     // .5::second => now;

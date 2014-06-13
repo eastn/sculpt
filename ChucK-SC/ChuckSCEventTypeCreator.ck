@@ -41,8 +41,9 @@ while( true )
     // grab the next message from the queue. 
     while ( oe.nextMsg() != 0 )
     { 
-        // getFloat fetches the expected float (as indicated by "f")
+       
         oe.getInt() => int presetNum;
+       
         // print
         <<< "got (via OSC): presetNum", presetNum  >>>;
         oe.getFloat() => float freq;
@@ -50,7 +51,7 @@ while( true )
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
-        presetNum => bar.preset;
+       presetNum => bar.preset;
   
        oe.getFloat() => bar.stickHardness;
        oe.getFloat() => bar.strikePosition;
