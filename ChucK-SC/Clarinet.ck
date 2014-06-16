@@ -4,14 +4,16 @@
 // this instrument with patterns. 
 
 // patch
-ModalBar bar => dac;
+Clarinet bar => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/bar,i:preset,f:freq,f:hardness,f:position,f:vibr,f:vibrRate,f:vol,f:directGain,f:mainGain" => string instrTriggerMessage;
+"/bar, f:reed, f:noiseGain, i:clear, f:vibratoFreq, f:vibratoGain, f:pressure, f:startBlowing, f:stopBlowing, f:rate" => string instrTriggerMessage;
+
+//clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -32,7 +34,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, i, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/bar, f, f, i, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -41,37 +43,37 @@ while( true )
     // grab the next message from the queue. 
     while ( oe.nextMsg() != 0 )
     { 
-       
-        oe.getInt() => int presetNum;
-       
+        // getFloat fetches the expected float (as indicated by "f")
+        //oe.getInt() => int presetNum;
         // print
-        <<< "got (via OSC): presetNum", presetNum  >>>;
+        //<<< "got (via OSC): presetNum", presetNum  >>>;
         oe.getFloat() => float freq;
         <<< "got (via OSC): FREQ", freq  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
-       presetNum => bar.preset;
-  
-       oe.getFloat() => bar.stickHardness;
-       oe.getFloat() => bar.strikePosition;
-       oe.getFloat() => bar.vibratoGain;
-       
-       oe.getFloat() => bar.vibratoFreq;
-       oe.getFloat() => bar.volume;
-       oe.getFloat() => bar.directGain;
-       oe.getFloat() => bar.masterGain;
+        
+        oe.getFloat() => bar.reed;
+        oe.getFloat() => bar.noiseGain;
+        oe.getInt() => bar.clear;
+        oe.getFloat() => bar.vibratoFreq;
+        oe.getFloat() => bar.vibratoGain;
+        oe.getFloat() => bar.pressure;
+        oe.getFloat() => bar.startBlowing;
+        oe.getFloat() => bar.stopBlowing;
+        oe.getFloat() => bar.rate;
         
         // print
         <<< "---", "" >>>;
-        <<< "preset:", bar.preset() >>>;
-        <<< "stick hardness:", bar.stickHardness() >>>;
-        <<< "strike position:", bar.strikePosition() >>>;
-        <<< "vibrato gain:", bar.vibratoGain() >>>;
-        <<< "vibrato freq:", bar.vibratoFreq() >>>;
-        <<< "volume:", bar.volume() >>>;
-        <<< "direct gain:", bar.directGain() >>>;
-        <<< "master gain:", bar.masterGain() >>>;
+        <<< "reed:", bar.reed() >>>;
+        <<< "noiseGain:", bar.noiseGain() >>>;
+        //<<< "clear:", bar.clear() >>>; //Write Only ?? (lacks of documentation).
+        <<< "vibratoFreq:", bar.vibratoFreq() >>>;
+        <<< "vibratoGain:", bar.vibratoGain() >>>;
+        <<< "pressure:", bar.pressure() >>>;
+        //<<< "startBlowing:", bar.startBlowing() >>>; //Write Only!
+        //<<< "stopBlowing:", bar.stopBlowing() >>>;   //Write Only!
+        <<< "rate:", bar.rate() >>>;
         
         // set freq
         freq => bar.freq;

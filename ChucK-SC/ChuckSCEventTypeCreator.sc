@@ -16,7 +16,7 @@ ChuckSCEventTypeCreator {
 		}
 	}
 
-	*initChuckInstrRegistry {
+	*initChuckSCEventTypeCreator {
 		OSCFunc({ | msg |
 			this.parseMessageAndMakeInstrument(msg);
 		}, '/c_instr');
@@ -37,17 +37,24 @@ ChuckSCEventTypeCreator {
 	*parseParam { | paramString |
 		var parName, type;
 		#type, parName = paramString split: $:;
-		^[parName, if (type.first === $i) { \asInteger } { \asFloat }]
+		//		[this, thisMethod, "TYPE first char:", type.first, "type is integer: type.first === $i" ].postln;
+		^[parName.asSymbol, if (type.first === $i) { \asInteger } { \asFloat }]
 	}
 
 	*makeAndAddEventType { | instrName, params |
-		Event.addEventType(instrName.asSymbol, {
-			~chuckServer.sendMsg(
-				(~instrument ? '/bar'),
-				*(params collect: {
-					(currentEnvironment[params[0]] ? 0).value.perform(params[1])
-				})
-			)
+		var message;
+		Event.addEventType(\chuckInstrument /* instrName.asSymbol */, {
+			// currentEnvironment.postln;
+			message = [~instrument ? '/bar'] ++
+			(params collect: { | param |
+				///					[param[0], param[0].class].postln;
+				//		currentEnvironment[param[0]].postln;
+					(currentEnvironment[param[0]] ? 0).value.perform(param[1])
+			});
+			"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".postln;
+			message.postln;
+			"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".postln;
+			~chuckServer.postln.sendMsg(*message);
 		})
 	}
 }

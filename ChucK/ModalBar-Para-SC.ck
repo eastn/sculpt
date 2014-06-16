@@ -8,6 +8,27 @@ ModalBar bar => dac;
 // scale
 [0, 2, 4, 7, 8, 11] @=> int scale[];
 
+// This is the message+format that the osc receiver listens to
+// and which triggers the instrument to play.
+// "/bar,i:preset,f:freq,f:stickHardness,f:strikePosition,f:vibratoFreq,f:vibratoGain,f:directGain,f:masterGain" => string instrTriggerMessage;
+"/bar,i:preset,f:freq,f:stickHardness,f:strikePosition,f:vibratoFreq,f:vibratoGain,f:directGain" => string instrTriggerMessage;
+
+////////////////// OSC sender ////////////////
+// create our OSC sender
+
+// This sender will notify Supercollider that a new instrument is listening
+OscSend sender;
+
+// Prepare to send to SuperCollider
+sender.setHost("localhost", 57120);
+
+// Preformat the message to be sent
+sender.startMsg("/c_instr, s");
+
+// Send the string declaring the format used to receive trigger messages
+sender.addString(instrTriggerMessage);
+
+
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 OscRecv recv;
@@ -17,7 +38,8 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, i, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+//recv.event( "/bar, i, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/bar, i, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -39,25 +61,25 @@ while( true )
   
        oe.getFloat() => bar.stickHardness;
        oe.getFloat() => bar.strikePosition;
-       oe.getFloat() => bar.vibratoGain;
-       
        oe.getFloat() => bar.vibratoFreq;
-       oe.getFloat() => bar.volume;
+       oe.getFloat() => bar.vibratoGain;
        oe.getFloat() => bar.directGain;
-       oe.getFloat() => bar.masterGain;
+      // oe.getFloat() => bar.volume;
+      // oe.getFloat() => bar.masterGain;
         
         // print
         <<< "---", "" >>>;
         <<< "preset:", bar.preset() >>>;
         <<< "stick hardness:", bar.stickHardness() >>>;
         <<< "strike position:", bar.strikePosition() >>>;
-        <<< "vibrato gain:", bar.vibratoGain() >>>;
         <<< "vibrato freq:", bar.vibratoFreq() >>>;
+        <<< "vibrato gain:", bar.vibratoGain() >>>;
         <<< "volume:", bar.volume() >>>;
         <<< "direct gain:", bar.directGain() >>>;
         <<< "master gain:", bar.masterGain() >>>;
         
         // set freq
+       // freq => bar.freq;
         freq => bar.freq;
         // go
         .8 => bar.noteOn;
