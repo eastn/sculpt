@@ -3,11 +3,34 @@
 Sculpting shapes and sounds with gestures using LeapMotion.
 Residency project of Konstantinos Vasilakos.
 
-Includes:
+*WORKSHOP RELEASE*
+
+* This repository includes:
+
 - SuperCollider classes and workspace files.
 - ChucK code files.
 - Config files for LeapMotion.
 - Design and help doc.
+- Files for the workshop
+
+* Installation instructions for workshop
+
+1. Download SuperCollider from: http://supercollider.sourceforge.net/downloads/
+   - Install SuperCollider
+2. Download ChucK from: http://chuck.cs.princeton.edu/release/
+   - Install ChucK
+3. Download the =tiny-sc= library from: https://github.com/iani/tiny-sc/archive/master.zip
+4. Download the =sculpt= library from: https://github.com/eastn/sculpt/releases/tag/test_release_for_workshop<n>
+   (Where <n> is the latest, uppermost number of release.)
+5. Start SuperCollider
+6. From the SuperCollider menu =File=, choose item "Open user support directory".
+7. In the folder named =SuperCollider= that is opened by this item, create a new subfolder named "Extensions".
+8. Put the folders =tiny-sc= and =sculpt= inside the folder =Extensions=.
+9. Create a new folder named "sounds" inside the above =SuperCollider= folder.
+10. Put any wav or aiff sample files that you would like to use inside the =sounds= folder.  Note: Do not put large samples that take up a great part of your computer's RAM portion, as all of these files will be loaded into RAM!.
+11. Recompile.
+
+* Overall config, archiecture, parts
 
 ** Hardware
 
@@ -20,19 +43,19 @@ Includes:
 
 ** Software
 
-*** SuperCollider
+**** SuperCollider
 
 Download SuperCollider from: http://supercollider.sourceforge.net/downloads/
-*** SuperCollider Libraries:
+**** SuperCollider Libraries:
   - Utopia (https://github.com/muellmusik/Utopia)
   - tiny-sc (https://github.com/iani/tiny-sc)
   - sculpt (This library: https://github.com/eastn/sculpt, folder: Classes)
-*** ChucK
+**** ChucK
 
 Download ChucK from: http://chuck.cs.princeton.edu/release/
 
 ChucK code is found in this library inside folder: ChucK.
 
-*** LeapMotion Configuration Files
+**** LeapMotion Configuration Files
 
 Files for configuring LeapMotion so as to send OSC to SuperCollider using the application Geco are located in the present library inside folder: LeapMotionSetup.
