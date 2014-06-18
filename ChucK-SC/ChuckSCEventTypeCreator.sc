@@ -70,7 +70,7 @@ ChuckSCEventTypeCreator {
 			))
 		*/
 		template = format(
-			"Pdef(\defname, Pbind(\\type, \chuckInstrument, \instrument, %",
+			"Pdef(\defname, Pbind(\\type, \\chuckInstrument, \\instrument, %",
 			instrName.asSymbol.asCompileString
 		).ccatList(
 			params.collect({ | p | 
@@ -78,7 +78,7 @@ ChuckSCEventTypeCreator {
 					if (p[1] === \asInteger) { 0 } { 0.1 }
 				)
 			});
-		) ++ "))";
+		) ++ ")).play";
 		Library.put(\PdefTemplates, instrName.asSymbol, template);
 	}
 
