@@ -70,7 +70,7 @@ ChuckSCEventTypeCreator {
 			))
 		*/
 		template = 
-		("Pdef(\defname, Pbind(\\\type, \\\\chuckInstrument, \\instrument, " ++
+		("Pdef(\\defname, Pbind(\\type, \\chuckInstrument, \instrument, " ++
 			instrName.asSymbol.asCompileString
 		).ccatList(
 			params.collect({ | p | 
@@ -91,9 +91,10 @@ ChuckSCEventTypeCreator {
 			    .. param pairs with default values 
 			))
 		*/
-		template = format(
-			"Edef(\defname, (type: \\\chuckInstrument, instrument: %",
-			instrName.asSymbol.asCompileString
+		template = 
+		(
+			"Edef(\defname, (type: \\chuckInstrument, instrument: %"
+			++ 	instrName.asSymbol.asCompileString
 		).ccatList(
 			params.collect({ | p | 
 				format("\n\t%:, %", p[0],
