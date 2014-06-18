@@ -53,7 +53,7 @@ ChuckSCEventTypeCreator {
 				//		currentEnvironment[param[0]].postln;
 					(currentEnvironment[param[0]] ? 0).value.perform(param[1])
 			});
-			~chuckServer.postln.sendMsg(*message);
+			~chuckServer.sendMsg(*message);
 		})
 	}
 
@@ -91,8 +91,9 @@ ChuckSCEventTypeCreator {
 		*/
 		template = 
 		(
-			"Edef(\defname, (type: \\chuckInstrument, instrument: %"
-			++ 	instrName.asSymbol.asCompileString
+			"Edef(\defname,\n (type: \\chuckInstrument, instrument: %"
+			++ 	instrName.asSymbol.asCompileString ++
+			"\n\tdur: 0.125 "
 		).ccatList(
 			params.collect({ | p | 
 				format("\n\t%:, %", p[0],
