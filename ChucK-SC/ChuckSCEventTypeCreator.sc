@@ -32,6 +32,8 @@ ChuckSCEventTypeCreator {
 		params = params collect: this.parseParam(_);
 		params.postln;
 		this.makeAndAddEventType(instrName, params);
+		this.makePdefTemplate(instrName, params);
+		this.makeEdefTemplate(instrName, params);
 	}
 
 	*parseParam { | paramString |
@@ -56,6 +58,28 @@ ChuckSCEventTypeCreator {
 			"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".postln;
 			~chuckServer.postln.sendMsg(*message);
 		})
+	}
+
+	makePdefTemplate { | instrName, params |
+		var template;
+		/* final form of template (string):
+			Pdef(\defname, Pbind(
+			    \type, \chuckInstrument,
+			    \instrument, \<instrName>,
+			    .. param pairs with default values 
+			))
+		*/
+		template = format(
+			"Pdef(\defname, Pbind(\type, \chuckInstrument, \instrument, %",
+			instrName.asSymbol.asCompileString
+		).ccatList(
+			params.collect({ | p | 
+				format("\n\t%, %", p[0].asCompileString,
+					if (p[1] === \asInteger) { 0 } { 0.1 }
+				)
+			});
+		) ++ "))";
+		Library.put(\PdefTemplates, instrName, template);
 	}
 }
 
