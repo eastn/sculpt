@@ -91,7 +91,7 @@ ChuckSCEventTypeCreator {
 		*/
 		template = 
 		(
-			"Edef(\defname,\n (type: \\chuckInstrument, instrument: %"
+			"Edef(\\defname,\n (type: \\chuckInstrument, instrument: %"
 			++ 	instrName.asSymbol.asCompileString ++
 			"\n\tdur: 0.125 "
 		).ccatList(
