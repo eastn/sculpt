@@ -105,6 +105,14 @@ ChuckSCEventTypeCreator {
 	}
 }
 
++ Symbol {
+	cpt {
+		// get Chuck Pdef Template
+		^Library.at(\PdefTemplates, this);
+	} 
+}
+
+
 /*
 "a, b, c".split($,);
 
