@@ -69,8 +69,8 @@ ChuckSCEventTypeCreator {
 			    .. param pairs with default values 
 			))
 		*/
-		template = format(
-			"Pdef(\defname, Pbind(\\\type, \\\\chuckInstrument, \\instrument, %",
+		template = 
+		("Pdef(\defname, Pbind(\\\type, \\\\chuckInstrument, \\instrument, " ++
 			instrName.asSymbol.asCompileString
 		).ccatList(
 			params.collect({ | p | 
