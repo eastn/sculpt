@@ -69,7 +69,7 @@ ChuckSCEventTypeCreator {
 		template = 
 		("Pdef(\\defname,\n Pbind(\\type, \\chuckInstrument, \\instrument, "
 			++ instrName.asSymbol.asCompileString
-			++ ", \n\t\\dur, 0.125, "
+			++ ", \n\t\\dur, 0.125 "
 		).ccatList(
 			params.collect({ | p | 
 				format("\n\t%, %", p[0].asCompileString,
