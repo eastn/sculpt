@@ -81,6 +81,28 @@ ChuckSCEventTypeCreator {
 		) ++ "))";
 		Library.put(\PdefTemplates, instrName, template);
 	}
+
+	*makeEdefTemplate { | instrName, params |
+		var template;
+		/* final form of template (string):
+			Pdef(\defname, Pbind(
+			    \type, \chuckInstrument,
+			    \instrument, \<instrName>,
+			    .. param pairs with default values 
+			))
+		*/
+		template = format(
+			"Edef(\defname, (type: \chuckInstrument, instrument: %",
+			instrName.asSymbol.asCompileString
+		).ccatList(
+			params.collect({ | p | 
+				format("\n\t%:, %", p[0],
+					if (p[1] === \asInteger) { 0 } { 0.1 }
+				)
+			});
+		) ++ "))";
+		Library.put(\EdefTemplates, instrName, template);
+	}
 }
 
 /*
