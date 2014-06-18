@@ -4,14 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-Flute bar => dac;
+Flute flute => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/bar, f:jetDelay, f:jetReflection, f:endReflection, f:noiseGain, f:vibratoFreq, f:vibratoGain, f:pressure, i:clear, f:startBlowing, f:stopBlowing, f:rate" => string instrTriggerMessage;
+"/flute,f:jetDelay,f:jetReflection,f:endReflection,f:noiseGain,f:vibratoFreq,f:vibratoGain,f:pressure" => string instrTriggerMessage;
 
 //clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
 
@@ -34,7 +34,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, f, f, f, f, f, f, f, i, f, f, f" ) @=> OscEvent oe;
+recv.event( "/flute, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -53,34 +53,26 @@ while( true )
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => bar.jetDelay;
-        oe.getFloat() => bar.jetReflection;
-        oe.getFloat() => bar.noiseGain;
-        oe.getFloat() => bar.vibratoFreq;
-        oe.getFloat() => bar.vibratoGain;
-        oe.getFloat() => bar.pressure;
-        oe.getInt() => bar.clear;
-        oe.getFloat() => bar.startBlowing;
-        oe.getFloat() => bar.stopBlowing;
-        oe.getFloat() => bar.rate;
-        
+        oe.getFloat() => flute.jetDelay;
+        oe.getFloat() => flute.jetReflection;
+        oe.getFloat() => flute.noiseGain;
+        oe.getFloat() => flute.vibratoFreq;
+        oe.getFloat() => flute.vibratoGain;
+        oe.getFloat() => flute.pressure;
+               
         // print
         <<< "---", "" >>>;
-        <<< "jetDelay:", bar.jetDelay() >>>;
-        <<< "jetReflection:", bar.jetReflection() >>>;
-        <<< "noiseGain:", bar.noiseGain() >>>;
-        <<< "vibratoFreq:", bar.vibratoFreq() >>>;
-        <<< "vibratoGain:", bar.vibratoGain() >>>;
-        <<< "pressure:", bar.pressure() >>>;
-        //<<< "clear:", bar.clear() >>>; //Write Only ?? (lacks of documentation).
-        //<<< "startBlowing:", bar.startBlowing() >>>; //Write Only!
-        //<<< "stopBlowing:", bar.stopBlowing() >>>;   //Write Only!
-        <<< "rate:", bar.rate() >>>;
+        <<< "jetDelay:", flute.jetDelay() >>>;
+        <<< "jetReflection:", flute.jetReflection() >>>;
+        <<< "noiseGain:", flute.noiseGain() >>>;
+        <<< "vibratoFreq:", flute.vibratoFreq() >>>;
+        <<< "vibratoGain:", flute.vibratoGain() >>>;
+        <<< "pressure:", flute.pressure() >>>;
         
         // set freq
-        freq => bar.freq;
+        freq => flute.freq;
         // go
-        .8 => bar.noteOn;
+        .8 => flute.noteOn;
     }
     // advance time
     // .5::second => now;
