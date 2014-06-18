@@ -20,6 +20,30 @@ ChuckSCEventTypeCreator {
 		OSCFunc({ | msg |
 			this.parseMessageAndMakeInstrument(msg);
 		}, '/c_instr');
+		this.makeChuckInstrumentEventType;
+	}
+
+	*makeChuckInstrumentEventType {
+		Event.addEventType(\chuckInstrument, {
+			// currentEnvironment.postln;
+			var instrument, params, message;
+			instrument = ~instrument ? '/bar';
+			//	[this, thisMethod.name, instrument].postln;
+			//	Library.at('ChuckInstruments').postln;
+			params = Library.at('ChuckInstruments', instrument);
+			params = params collect: { | param |
+				///					[param[0], param[0].class].postln;
+				//		currentEnvironment[param[0]].postln;
+					(currentEnvironment[param[0]] ? 0).value.perform(param[1])
+			};
+			//	params.postln;
+			message = [instrument] ++ params;
+			//message.postln;
+			~chuckServer.sendMsg(*message);
+		});
+
+		//	[this, thisMethod.name].postln;
+
 	}
 
 	*parseMessageAndMakeInstrument { | msg |
@@ -44,17 +68,9 @@ ChuckSCEventTypeCreator {
 	}
 
 	*makeAndAddEventType { | instrName, params |
-		var message;
-		Event.addEventType(\chuckInstrument /* instrName.asSymbol */, {
-			// currentEnvironment.postln;
-			message = [~instrument ? '/bar'] ++
-			(params collect: { | param |
-				///					[param[0], param[0].class].postln;
-				//		currentEnvironment[param[0]].postln;
-					(currentEnvironment[param[0]] ? 0).value.perform(param[1])
-			});
-			~chuckServer.sendMsg(*message);
-		})
+		var message, instrParams;
+		Library.put(\ChuckInstruments, instrName.asSymbol, params);
+		// [this, thisMethod.name, Library.at(\ChuckInstruments)].postln
 	}
 
 	*makePdefTemplate { | instrName, params |
@@ -67,7 +83,8 @@ ChuckSCEventTypeCreator {
 			))
 		*/
 		template = 
-		("Pdef(\\defname,\n Pbind(\\type, \\chuckInstrument, \\instrument, "
+		("Pdef(" ++ instrName.asSymbol.asCompileString
+			++ ",\n Pbind(\\type, \\chuckInstrument, \\instrument, "
 			++ instrName.asSymbol.asCompileString
 			++ ", \n\t\\dur, 0.125 "
 		).ccatList(

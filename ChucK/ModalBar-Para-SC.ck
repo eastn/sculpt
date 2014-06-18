@@ -49,6 +49,10 @@ while( true )
     while ( oe.nextMsg() != 0 )
     { 
         // getFloat fetches the expected float (as indicated by "f")
+        
+       // oe.getFloat() => float noteOn;
+       // <<< "got (via OSC): NoteOn", noteOn  >>>;
+        
         oe.getInt() => int presetNum;
         // print
         <<< "got (via OSC): presetNum", presetNum  >>>;
@@ -57,6 +61,8 @@ while( true )
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
+       
+        
         presetNum => bar.preset;
   
        oe.getFloat() => bar.stickHardness;
@@ -82,7 +88,11 @@ while( true )
        // freq => bar.freq;
         freq => bar.freq;
         // go
+        
         .8 => bar.noteOn;
+        //if ( noteOn >= 0 ) {
+        //    .8 => bar.noteOn;
+       // };
     }
     // advance time
     // .5::second => now;

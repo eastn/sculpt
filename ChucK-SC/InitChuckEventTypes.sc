@@ -18,7 +18,7 @@ InitChuckEventTypes {
 	*addEventTypes {
 		Event.parentEvents.default[\chuckServer] = NetAddr("127.0.0.1", 6449);
 		this.addTestType1;
-		this.addGenericInstrument;
+		//		this.addGenericInstrument;
 		// will add more types later...
 	}
 
@@ -33,6 +33,7 @@ InitChuckEventTypes {
 		})
 	}
 
+	/*
 	*addGenericInstrument {
 		Event.addEventType(\chuckInstrument, {
 			~chuckServer.sendMsg(
@@ -43,4 +44,6 @@ InitChuckEventTypes {
 				~position ? 0.5
 			);
 		})
-	}}
+	}
+	*/
+}
