@@ -53,9 +53,6 @@ ChuckSCEventTypeCreator {
 				//		currentEnvironment[param[0]].postln;
 					(currentEnvironment[param[0]] ? 0).value.perform(param[1])
 			});
-			"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".postln;
-			message.postln;
-			"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".postln;
 			~chuckServer.postln.sendMsg(*message);
 		})
 	}
@@ -70,8 +67,9 @@ ChuckSCEventTypeCreator {
 			))
 		*/
 		template = 
-		("Pdef(\\defname, Pbind(\\type, \\chuckInstrument, \\instrument, " ++
-			instrName.asSymbol.asCompileString
+		("Pdef(\\defname,\n Pbind(\\type, \\chuckInstrument, \\instrument, "
+			++ instrName.asSymbol.asCompileString
+			++ "\\dur, 0.125, "
 		).ccatList(
 			params.collect({ | p | 
 				format("\n\t%, %", p[0].asCompileString,
