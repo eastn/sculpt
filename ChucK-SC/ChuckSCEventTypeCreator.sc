@@ -60,7 +60,7 @@ ChuckSCEventTypeCreator {
 		})
 	}
 
-	makePdefTemplate { | instrName, params |
+	*makePdefTemplate { | instrName, params |
 		var template;
 		/* final form of template (string):
 			Pdef(\defname, Pbind(
