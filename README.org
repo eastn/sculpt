@@ -20,15 +20,16 @@ Residency project of Konstantinos Vasilakos.
 2. Download ChucK from: http://chuck.cs.princeton.edu/release/
    - Install ChucK
 3. Download the =tiny-sc= library from: https://github.com/iani/tiny-sc/archive/master.zip
-4. Download the =sculpt= library from: https://github.com/eastn/sculpt/releases/tag/test_release_for_workshop<n>
+4. Download the =tiny-sc-addons= library from: https://github.com/iani/tiny-sc-addons (this contains additional UGen plugins needed for onset tracking).
+5. Download the =sculpt= library from: https://github.com/eastn/sculpt/releases/tag/test_release_for_workshop<n>
    _(Where <n> is the latest, uppermost number of release.)_
-5. Start SuperCollider
-6. From the SuperCollider menu =File=, choose item "Open user support directory".
-7. In the folder named =SuperCollider= that is opened by this item, create a new subfolder named "Extensions".
-8. Put the folders =tiny-sc= and =sculpt= inside the folder =Extensions=.
-9. Create a new folder named "sounds" inside the above =SuperCollider= folder.
-10. Put any wav or aiff sample files that you would like to use inside the =sounds= folder.  Note: Do not put large samples that take up a great part of your computer's RAM portion, as all of these files will be loaded into RAM!.  You can get the audio files used in some examples of the present documentation by downloading from: https://github.com/iani/sounds
-11. Recompile.
+6. Start SuperCollider
+7. From the SuperCollider menu =File=, choose item "Open user support directory".
+8. In the folder named =SuperCollider= that is opened by this item, create a new subfolder named "Extensions".
+9. Put the folders =tiny-sc=, =tiny-sc-addons= and =sculpt= (or aliases of these folders) inside the folder =Extensions=.
+10. Create a new folder named "sounds" inside the above =SuperCollider= folder.
+11. Put any wav or aiff sample files that you would like to use inside the =sounds= folder.  Note: Do not put large samples that take up a great part of your computer's RAM portion, as all of these files will be loaded into RAM!.  You can get the audio files used in some examples of the present documentation by downloading from: https://github.com/iani/sounds
+12. Recompile the SuperCollider library (See menu item Language, keyboard shortcut: Command-shift-l).
 
 * Overall config, archiecture, parts
 
