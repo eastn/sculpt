@@ -80,8 +80,11 @@ OSCFunc({
 BufferList.loadFolder;
 
 /*
-To play with the buffers below, download 
-
+To play with the buffers below, download the samples from: 
+https://github.com/iani/sounds
+And place the sounds folder inside the user support directory 
+(see also: README.org, 
+https://github.com/iani/SC/blob/snippets/README.org)
 */
 
 //: Now try playing some of the loaded buffers: 
@@ -96,19 +99,19 @@ To play with the buffers below, download
 
 `\tamb +> \test; // last one, once
 
-//:
+//: Now connect a simple sample player to the tracker above:
 
+\samplePlayer1.st.addNotifier(~detector, \onset, {
+	`\conga +> \samplePlayer1;
+});
 
-\test.set(\trigger, 100000.0.rand);
+//: Variation: Play a different sample each time, 
+// selected from the list of all loaded buffers (in series): 
 
-`\reallinn +> \test;
+~samples = Library.at(Server.default).keys.asArray
+.select({ | b | b !== '*null-buffer*' })
+.pseq.asStream;
 
-//:
-\test.set(\trigger, 0);
-\test.set(\trigger, 1);
-//:
-`\boat +> \test;
-
-
-//:
-Server.killAll;
+\samplePlayer1.st.addNotifier(~detector, \onset, {
+	`(~samples.next) +> \samplePlayer1;
+})
