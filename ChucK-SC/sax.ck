@@ -4,15 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-BlowHole blow => dac;
+Saxofony sax => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-// f:reed, f:noiseGain, f:tonehole, f:vent, f:pressure, f:startBlowing, f:stopBlowing, f:rate
-"/blow,f:noteOn,f:freq,f:reed,f:noiseGain,f:tonehole,f:vent,f:pressure,f:startBowing,f:stopBowing,f:rate" => string instrTriggerMessage;
+"/sax,f:noteOn,f:freq,f:stiffness,f:aperture" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -33,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/blow, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/sax, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -41,45 +40,48 @@ while( true )
     oe => now;   
     // grab the next message from the queue. 
     while ( oe.nextMsg() != 0 )
-  { 
+    { 
         // getFloat fetches the expected float (as indicated by "f")
         //oe.getInt() => int presetNum;
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
         oe.getFloat() => float noteOn;
         oe.getFloat() => float freq;
-       <<< "got (via OSC): FREQ", freq  >>>;
-       <<< "got (via OSC): NoteON", noteOn  >>>;
+        <<< "got (via OSC): FREQ", freq  >>>;
+        <<< "got (via OSC): NoteOn", noteOn  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
-                
-       oe.getFloat() => blow.reed;
-       oe.getFloat() => blow.noiseGain;
-       oe.getFloat() => blow.tonehole;
-       oe.getFloat() => blow.vent;
-       oe.getFloat() => blow.pressure;
-       oe.getFloat() => blow.startBlowing;
-       oe.getFloat() => blow.stopBlowing;
-       oe.getFloat() => blow.rate;
-                
+        
+        oe.getFloat() => sax.stiffness;
+        oe.getFloat() => sax.aperture;
+        //oe.getFloat() => sax.vibratoFreq;
+        //oe.getFloat() => sax.vibratoGain;
+        //oe.getFloat() => sax.volume;
+        //oe.getFloat() => sax.clear;
+        //oe.getFloat() => sax.startBlowing;
+        //oe.getFloat() => sax.stopBlowing;
+        //oe.getFloat() => sax.rate;
         
         // print
         <<< "---", "" >>>;
-        <<< "reed:", blow.reed() >>>;
-        <<< "noiseGain:", blow.noiseGain() >>>;
-        <<< "tonehole:", blow.tonehole() >>>;
-        <<< "vent:", blow.vent() >>>;
-        <<< "pressure:", blow.pressure() >>>;
-        <<< "rate:", blow.rate() >>>;
+        <<< "stiffness:", sax.stiffness() >>>;
+        <<< "aperture:", sax.aperture() >>>;
+       // <<< "vibratoFreq:", sax.vibratoFreq() >>>;
+       // <<< "vibratoGain:", sax.vibratoGain() >>>;
+       // <<< "volume:", sax.volume() >>>;
+        //<<< "clear:", sax.clear() >>>; //Write Only!
+        //<<< "startBlowing:", sax.startBlowing() >>>; //Write Only!
+        //<<< "stopBlowing:", sax.stopBlowing() >>>;   //Write Only!
+       // <<< "rate:", sax.rate() >>>;
         
         // set freq
-        freq => blow.freq;
+        freq => sax.freq;
         // go
         if ( noteOn >= 0 ) {
-            .8 => blow.noteOn;
+            .8 => sax.noteOn;
         };
     }
     // advance time
-    // .1::second => now;
+    // .5::second => now;
 }

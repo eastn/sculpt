@@ -9,7 +9,7 @@ Bowed bowed => dac;
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/bowed, f:freq, f:bowPressure, f:bowPosition, f:vibratoFreq, f:vibratoGain, f:volume, f:startBowing, f:stopBowing, f:rate" => string instrTriggerMessage;
+"/bowed,f:noteOn,f:freq,f:bowPressure,f:bowPosition,f:vibratoFreq,f:vibratoGain,f:volume,f:startBowing,f:stopBowing" => string instrTriggerMessage;
 
 ////////////////// OSC sender ////////////////
 // create our OSC sender
@@ -49,7 +49,9 @@ while( true )
         //oe.getInt() => int presetNum;
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
+        oe.getFloat() => float noteOn;
         oe.getFloat() => float freq;
+         <<< "got (via OSC): NoteON", noteOn  >>>;
         <<< "got (via OSC): FREQ", freq  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
@@ -71,15 +73,15 @@ while( true )
         <<< "vibratoFreq:", bowed.vibratoFreq() >>>;
         <<< "vibratoGain:", bowed.vibratoGain() >>>;
         <<< "volume:", bowed.volume() >>>;
-      //<<< "startBlowing:", bowed.startBowing() >>>; //Write Only!
-      //<<< "stopBlowing:", bowed.stopBowing() >>>;   //Write Only!
-        //<<< "rate:", bowed.rate() >>>;
+        //<<< "rate:", bowed.rate() >>>; //error: class 'Bowed' has no member 'rate'
         
         // set freq
-        // freq => bowed.freq;
+         freq => bowed.freq;
         // go
-        .8 => bowed.noteOn;
-    }
+        if ( noteOn >= 0 ) {
+            .8 => bowed.noteOn;
+    };
+}
     // advance time
     // .5::second => now;
 }

@@ -4,15 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-Brass bar => dac;
+Brass brass => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-
-"/bar, f:bowPressure, f:bowPosition, f:vibratoFreq, f:vibratoGain, f:volume, f:startBowing, f:stopBowing, f:rate" => string instrTriggerMessage;
+"/brass,f:noteOn,f:freq,f:lip,f:slide,f:vibratoFreq,f:vibratoGain,f:volume,f:clear,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -33,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/brass, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -46,38 +45,42 @@ while( true )
         //oe.getInt() => int presetNum;
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
+        oe.getFloat() => float noteOn;
         oe.getFloat() => float freq;
         <<< "got (via OSC): FREQ", freq  >>>;
+         <<< "got (via OSC): NoteOn", noteOn  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => bar.lip;
-        oe.getFloat() => bar.slide;
-        oe.getFloat() => bar.vibratoFreq;
-        oe.getFloat() => bar.vibratoGain;
-        oe.getFloat() => bar.volume;
-        oe.getFloat() => bar.clear;
-        oe.getFloat() => bar.startBlowing;
-        oe.getFloat() => bar.stopBlowing;
-        oe.getFloat() => bar.rate;
+        oe.getFloat() => brass.lip;
+        oe.getFloat() => brass.slide;
+        oe.getFloat() => brass.vibratoFreq;
+        oe.getFloat() => brass.vibratoGain;
+        oe.getFloat() => brass.volume;
+        oe.getFloat() => brass.clear;
+        oe.getFloat() => brass.startBlowing;
+        oe.getFloat() => brass.stopBlowing;
+        oe.getFloat() => brass.rate;
         
         // print
         <<< "---", "" >>>;
-        <<< "lip:", bar.lip() >>>;
-        <<< "slide:", bar.slide() >>>;
-        <<< "vibratoFreq:", bar.vibratoFreq() >>>;
-        <<< "vibratoGain:", bar.vibratoGain() >>>;
-        <<< "volume:", bar.volume() >>>;
-        //<<< "clear:", bar.clear() >>>; //Write Only!
-        //<<< "startBlowing:", bar.startBowing() >>>; //Write Only!
-        //<<< "stopBlowing:", bar.stopBowing() >>>;   //Write Only!
-        <<< "rate:", bar.rate() >>>;
+        <<< "lip:", brass.lip() >>>;
+        <<< "slide:", brass.slide() >>>;
+        <<< "vibratoFreq:", brass.vibratoFreq() >>>;
+        <<< "vibratoGain:", brass.vibratoGain() >>>;
+        <<< "volume:", brass.volume() >>>;
+        //<<< "clear:", brass.clear() >>>; //Write Only!
+        //<<< "startBlowing:", brass.startBlowing() >>>; //Write Only!
+        //<<< "stopBlowing:", brass.stopBlowing() >>>;   //Write Only!
+        <<< "rate:", brass.rate() >>>;
         
         // set freq
-        freq => bar.freq;
+        freq => brass.freq;
         // go
-        .8 => bar.noteOn;
+        if ( noteOn >= 0 ) {
+            .8 => brass.noteOn;
+        };
     }
     // advance time
     // .5::second => now;

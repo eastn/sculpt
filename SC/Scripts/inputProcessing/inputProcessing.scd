@@ -7,6 +7,8 @@ A code snippet to track the mic input and trig something using Coyote (onset uge
 */
 
 //:
+ 
+
 
 Ndef(\coyote, {
 	var input = SoundIn.ar(1);
@@ -21,3 +23,17 @@ Ndef(\coyote, {
 	detect
 }).play
 
+//:
+
+
+s.meter
+
+//:
+
+Ndef(\coyoteBufTrig, {
+	var input = SoundIn.ar(1);
+	var detect = Decay.kr(
+		Coyote.kr(input, fastMul: 0.1,	thresh: 0.001),
+		0.2);
+	detect
+}).play

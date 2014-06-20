@@ -11,7 +11,7 @@ Flute flute => dac;
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/flute,f:jetDelay,f:jetReflection,f:endReflection,f:noiseGain,f:vibratoFreq,f:vibratoGain,f:pressure" => string instrTriggerMessage;
+"/flute,f:noteOn,f:freq,f:jetDelay,f:jetReflection,f:endReflection,f:noiseGain,f:vibratoFreq,f:vibratoGain,f:pressure,f:clear,f:startBlowing,f:stopBLowing,f:rate" => string instrTriggerMessage;
 
 //clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
 
@@ -34,7 +34,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/flute, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/flute, f, f, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -47,8 +47,10 @@ while( true )
         //oe.getInt() => int presetNum;
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
+        oe.getFloat() => float noteOn;
         oe.getFloat() => float freq;
         <<< "got (via OSC): FREQ", freq  >>>;
+        <<< "got (via OSC): NoteON", noteOn  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
@@ -59,6 +61,10 @@ while( true )
         oe.getFloat() => flute.vibratoFreq;
         oe.getFloat() => flute.vibratoGain;
         oe.getFloat() => flute.pressure;
+        oe.getFloat() => flute.clear;
+        oe.getFloat() => flute.startBlowing;
+        oe.getFloat() => flute.stopBlowing;
+        oe.getFloat() => flute.rate;
                
         // print
         <<< "---", "" >>>;
@@ -68,11 +74,14 @@ while( true )
         <<< "vibratoFreq:", flute.vibratoFreq() >>>;
         <<< "vibratoGain:", flute.vibratoGain() >>>;
         <<< "pressure:", flute.pressure() >>>;
+        <<< "rate:", flute.rate() >>>;
         
         // set freq
         freq => flute.freq;
         // go
-        .8 => flute.noteOn;
+        if ( noteOn >= 0 ) {
+            .8 => flute.noteOn;
+        };
     }
     // advance time
     // .5::second => now;
