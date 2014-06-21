@@ -31,7 +31,7 @@ GecoMapperSingle : UniqueWindow {
 			VLayout(
 				HLayout(
 					submitButton = Button().states_([["submit"]])
-					.maxHeight_(23).action_({ this.updateOSCdef }),
+					.maxHeight_(23).action_({ this.updateOSC }),
 					Button().states_([["test this osc message"]])
 					.maxHeight_(23).action_({
 						this.testOscMessage(pathSelectionView.item);
@@ -59,9 +59,7 @@ GecoMapperSingle : UniqueWindow {
 		editedPath = pathSelectionView.item;
 		editedActionString = actions[editedPath];
 		actionEditorView.string = editedActionString;
-		actions keysValuesDo: { | key, value |
-			OSCdef(key, value.interpret, key);
-		};
+		actions keysValuesDo: { | key, value | value.interpret };
 	}
 
 	playAll {
@@ -80,9 +78,7 @@ GecoMapperSingle : UniqueWindow {
 	}
 
 	submitPreviousPath {
-		editedPath !? {
-			OSCdef(editedPath, editedActionString.interpret, editedPath);
-		}
+		editedPath !? { editedActionString.interpret }
 	}
 
 	updateCurrentPath { | path |
@@ -102,11 +98,18 @@ GecoMapperSingle : UniqueWindow {
 	}
 
 	makeActions {
+		var defaultCodeString;
+		defaultCodeString = ".osc_
+.spec_([-1.0, 1].asSpec)
+.addListener(\\action1, { | value |
+	(dur: 0.1 + value / 3) +> \\pattern1;
+});
+";
 		actions = IdentityDictionary();
-		paths do: { | p | actions[p] = "{ | ... args | args.postln; }" }
+		paths do: { | p | actions[p] = p.asCompileString ++ defaultCodeString }
 	}
 
-	updateOSCdef {
+	updateOSC {
 		actions[pathSelectionView.item] = actionEditorView.string;
 		this.submitPreviousPath;
 	}
