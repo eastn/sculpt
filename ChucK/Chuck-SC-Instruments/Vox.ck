@@ -4,16 +4,15 @@
 // this instrument with patterns. 
 
 // patch
-Flute flute => dac;
+VoicForm vox => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/flute,f:noteOn,f:freq,f:jetDelay,f:jetReflection,f:endReflection,f:noiseGain,f:vibratoFreq,f:vibratoGain,f:pressure,f:clear,f:startBlowing,f:stopBLowing,f:rate" => string instrTriggerMessage;
+"/vox,f:freq,f:noteOn,i:phonemeNum,f:speak" => string instrTriggerMessage;
 
-//clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -34,7 +33,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/flute, f, f, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/vox, f, f, i, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -46,7 +45,7 @@ while( true )
         // getFloat fetches the expected float (as indicated by "f")
         //oe.getInt() => int presetNum;
         // print
-        //<<< "got (via OSC): presetNum", presetNum  >>
+        //<<< "got (via OSC): presetNum", presetNum  >>>;
         oe.getFloat() => float freq;
         oe.getFloat() => float noteOn;
         <<< "got (via OSC): FREQ", freq  >>>;
@@ -55,33 +54,22 @@ while( true )
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => flute.jetDelay;
-        oe.getFloat() => flute.jetReflection;
-        oe.getFloat() => flute.noiseGain;
-        oe.getFloat() => flute.vibratoFreq;
-        oe.getFloat() => flute.vibratoGain;
-        oe.getFloat() => flute.pressure;
-        oe.getFloat() => flute.clear;
-        oe.getFloat() => flute.startBlowing;
-        oe.getFloat() => flute.stopBlowing;
-        oe.getFloat() => flute.rate;
-               
+        oe.getInt() => vox.phonemeNum;
+        oe.getFloat() => vox.speak;
+        
+        
         // print
         <<< "---", "" >>>;
-        <<< "jetDelay:", flute.jetDelay() >>>;
-        <<< "jetReflection:", flute.jetReflection() >>>;
-        <<< "noiseGain:", flute.noiseGain() >>>;
-        <<< "vibratoFreq:", flute.vibratoFreq() >>>;
-        <<< "vibratoGain:", flute.vibratoGain() >>>;
-        <<< "pressure:", flute.pressure() >>>;
-        <<< "rate:", flute.rate() >>>;
+        <<< "phonemeNum:", vox.phonemeNum() >>>; //does not printing
+        //<<< ":", clar.noiseGain() >>>;
         
         // set freq
-        freq => flute.freq;
+        freq => vox.freq;
         // go
         if ( noteOn >= 0 ) {
-            .8 => flute.noteOn;
+            .8 => vox.noteOn;
         };
+        
     }
     // advance time
     // .5::second => now;

@@ -4,14 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-Flute flute => dac;
+Sitar sitar => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/flute,f:noteOn,f:freq,f:jetDelay,f:jetReflection,f:endReflection,f:noiseGain,f:vibratoFreq,f:vibratoGain,f:pressure,f:clear,f:startBlowing,f:stopBLowing,f:rate" => string instrTriggerMessage;
+"/sitar,f:freq,f:noteOn,f:pluck,f:clear" => string instrTriggerMessage;
 
 //clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
 
@@ -34,7 +34,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/flute, f, f, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/sitar, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -46,7 +46,7 @@ while( true )
         // getFloat fetches the expected float (as indicated by "f")
         //oe.getInt() => int presetNum;
         // print
-        //<<< "got (via OSC): presetNum", presetNum  >>
+        //<<< "got (via OSC): presetNum", presetNum  >>>;
         oe.getFloat() => float freq;
         oe.getFloat() => float noteOn;
         <<< "got (via OSC): FREQ", freq  >>>;
@@ -55,33 +55,20 @@ while( true )
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => flute.jetDelay;
-        oe.getFloat() => flute.jetReflection;
-        oe.getFloat() => flute.noiseGain;
-        oe.getFloat() => flute.vibratoFreq;
-        oe.getFloat() => flute.vibratoGain;
-        oe.getFloat() => flute.pressure;
-        oe.getFloat() => flute.clear;
-        oe.getFloat() => flute.startBlowing;
-        oe.getFloat() => flute.stopBlowing;
-        oe.getFloat() => flute.rate;
-               
+        oe.getFloat() => sitar.pluck;
+        oe.getFloat() => sitar.clear;
+        
         // print
         <<< "---", "" >>>;
-        <<< "jetDelay:", flute.jetDelay() >>>;
-        <<< "jetReflection:", flute.jetReflection() >>>;
-        <<< "noiseGain:", flute.noiseGain() >>>;
-        <<< "vibratoFreq:", flute.vibratoFreq() >>>;
-        <<< "vibratoGain:", flute.vibratoGain() >>>;
-        <<< "pressure:", flute.pressure() >>>;
-        <<< "rate:", flute.rate() >>>;
-        
+       // <<< "reed:", sitar.clear() >>>;
+                
         // set freq
-        freq => flute.freq;
+        freq => sitar.freq;
         // go
         if ( noteOn >= 0 ) {
-            .8 => flute.noteOn;
+            .8 => sitar.noteOn;
         };
+        
     }
     // advance time
     // .5::second => now;
