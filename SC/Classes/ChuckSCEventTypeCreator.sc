@@ -126,7 +126,11 @@ ChuckSCEventTypeCreator {
 	cpt {
 		// get Chuck Pdef Template
 		^Library.at(\PdefTemplates, this);
-	} 
+	}
+
+	cet {
+		^Library.at(\EdefTemplates, this);
+	}
 }
 
 
