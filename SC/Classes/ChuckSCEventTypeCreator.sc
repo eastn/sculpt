@@ -110,7 +110,7 @@ ChuckSCEventTypeCreator {
 		(
 			"(type: \\chuckInstrument, instrument: "
 			++ 	instrName.asSymbol.asCompileString ++
-			"\n\tdur: 0.125, "
+			",\n\tdur: 0.125 "
 		).ccatList(
 			params.collect({ | p | 
 				format("\n\t%: %", p[0],
