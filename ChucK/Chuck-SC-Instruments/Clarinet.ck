@@ -4,14 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-Clarinet bar => dac;
+Clarinet clar => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/bar, f:reed, f:noiseGain, i:clear, f:vibratoFreq, f:vibratoGain, f:pressure, f:startBlowing, f:stopBlowing, f:rate" => string instrTriggerMessage;
+"/clar,f:freq,f:noteOn,f:reed,f:noiseGain,f:clear,f:vibratoFreq,f:vibratoGain,f:pressure,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
 
 //clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
 
@@ -34,7 +34,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/bar, f, f, i, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/clar, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -48,37 +48,42 @@ while( true )
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
         oe.getFloat() => float freq;
+        oe.getFloat() => float noteOn;
         <<< "got (via OSC): FREQ", freq  >>>;
+        <<< "got (via OSC): NoteON", noteOn  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => bar.reed;
-        oe.getFloat() => bar.noiseGain;
-        oe.getInt() => bar.clear;
-        oe.getFloat() => bar.vibratoFreq;
-        oe.getFloat() => bar.vibratoGain;
-        oe.getFloat() => bar.pressure;
-        oe.getFloat() => bar.startBlowing;
-        oe.getFloat() => bar.stopBlowing;
-        oe.getFloat() => bar.rate;
+        oe.getFloat() => clar.reed;
+        oe.getFloat() => clar.noiseGain;
+        oe.getInt() => clar.clear;
+        oe.getFloat() => clar.vibratoFreq;
+        oe.getFloat() => clar.vibratoGain;
+        oe.getFloat() => clar.pressure;
+        oe.getFloat() => clar.startBlowing;
+        oe.getFloat() => clar.stopBlowing;
+        oe.getFloat() => clar.rate;
         
         // print
         <<< "---", "" >>>;
-        <<< "reed:", bar.reed() >>>;
-        <<< "noiseGain:", bar.noiseGain() >>>;
-        //<<< "clear:", bar.clear() >>>; //Write Only ?? (lacks of documentation).
-        <<< "vibratoFreq:", bar.vibratoFreq() >>>;
-        <<< "vibratoGain:", bar.vibratoGain() >>>;
-        <<< "pressure:", bar.pressure() >>>;
-        //<<< "startBlowing:", bar.startBlowing() >>>; //Write Only!
-        //<<< "stopBlowing:", bar.stopBlowing() >>>;   //Write Only!
-        <<< "rate:", bar.rate() >>>;
+        <<< "reed:", clar.reed() >>>;
+        <<< "noiseGain:", clar.noiseGain() >>>;
+        //<<< "clear:", clar.clear() >>>; //Write Only ?? (lacks of documentation).
+        <<< "vibratoFreq:", clar.vibratoFreq() >>>;
+        <<< "vibratoGain:", clar.vibratoGain() >>>;
+        <<< "pressure:", clar.pressure() >>>;
+        //<<< "startBlowing:", clar.startBlowing() >>>; //Write Only!
+        //<<< "stopBlowing:", clar.stopBlowing() >>>;   //Write Only!
+        <<< "rate:", clar.rate() >>>;
         
         // set freq
-        freq => bar.freq;
+        freq => clar.freq;
         // go
-        .8 => bar.noteOn;
+        if ( noteOn >= 0 ) {
+            .8 => clar.noteOn;
+        };
+
     }
     // advance time
     // .5::second => now;
