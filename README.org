@@ -5,6 +5,22 @@ Residency project of Konstantinos Vasilakos.
 
 *WORKSHOP RELEASE*
 
+* Sound sculpt workshop outline: 06/22/14 & 17                        :eastn:
+
+1. Tangibility, Live Coding, Phsyical Models, Gestures
+
+2. Live Coding with SuperCollider
+
+3. Controlling ChucK through SuperCollider
+
+4. Making Tangible Interfaces with Contact Mikes
+
+5. Gestural Control with Leap Motion
+
+6. (Networked) Collective Jam Session
+
+7. Conclusion
+
 * This repository includes:
 
 - SuperCollider classes and workspace files.

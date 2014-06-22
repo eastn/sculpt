@@ -99,25 +99,18 @@ ChuckSCEventTypeCreator {
 
 	*makeEdefTemplate { | instrName, params |
 		var template;
-		/* final form of template (string):
-			Pdef(\defname, Pbind(
-			    \type, \chuckInstrument,
-			    \instrument, \<instrName>,
-			    .. param pairs with default values 
-			))
-		*/
 		template = 
 		(
 			"(type: \\chuckInstrument, instrument: "
-			++ 	instrName.asSymbol.asCompileString ++
-			",\n\tdur: 0.125 "
+			++ instrName.asSymbol.asCompileString
+			++ ",\n\tdur: 0.125 "
 		).ccatList(
 			params.collect({ | p | 
-				format("\n\t%: %", p[0],
-					if (p[1] === \asInteger) { 0 } { 0.1 }
-				)
+				format("\n\t%: %", p[0], if (p[1] === \asInteger) { 0 } { 0.1 })
 			});
-		) ++ ") => \\pattern1;";
+		)
+		++ ") => \\pattern1;";
+
 		Library.put(\EdefTemplates, instrName.asSymbol, template);
 	}
 }
@@ -128,7 +121,7 @@ ChuckSCEventTypeCreator {
 		^Library.at(\PdefTemplates, this);
 	}
 
-	cet {
+	cet {  // get Chuck Event => \synthtree Template
 		^Library.at(\EdefTemplates, this);
 	}
 }
