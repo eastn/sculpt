@@ -67,7 +67,7 @@ while( true )
         freq => vox.freq;
         // go
         if ( noteOn >= 0 ) {
-            .8 => vox.noteOn;
+           .8 => vox.noteOn;
         };
         
     }

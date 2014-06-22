@@ -1,13 +1,11 @@
-// =====================================================================
-// SuperCollider Workspace
-// =====================================================================
-
 
 /* 
 Use SC patterns to control some ChucK instruments. -Run the ChucK .ck files: Flute, ModalBar, Shakers.
 */
 
 '/flute'.cpt /* JITLib style to control a Chuck instrument, copy the Pdef created in the post window and alter its control values using patterns. */
+
+// JITLib - style
 
 //:
 

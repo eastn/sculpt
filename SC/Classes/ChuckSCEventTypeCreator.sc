@@ -101,7 +101,8 @@ ChuckSCEventTypeCreator {
 		var template;
 		template = 
 		(
-			"(type: \\chuckInstrument, instrument: "
+			format("\n//: ================ % ================\n", instrName[1..])
+			++ "(type: \\chuckInstrument, instrument: "
 			++ instrName.asSymbol.asCompileString
 			++ ",\n\tdur: 0.125 "
 		).ccatList(
@@ -109,7 +110,9 @@ ChuckSCEventTypeCreator {
 				format("\n\t%: %", p[0], if (p[1] === \asInteger) { 0 } { 0.1 })
 			});
 		)
-		++ ") => \\pattern1;";
+		++ ") => \\"
+		++ instrName[1..]
+		++ ";\n";
 
 		Library.put(\EdefTemplates, instrName.asSymbol, template);
 	}

@@ -15,7 +15,7 @@ GecoMapperSingle : UniqueWindow {
 	var <editedPath, <editedActionString;
 
 	*initClass {
-		StartUp add: { this.default };
+		//		StartUp add: { this.default };
 	}
 
 	*default {
@@ -102,7 +102,8 @@ GecoMapperSingle : UniqueWindow {
 		defaultCodeString = ".osc_
 .spec_([-1.0, 1].asSpec)
 .addListener(\\action1, { | value |
-	(dur: 0.1 + value / 3) +> \\pattern1;
+//	value.postln;
+//	(dur: 0.1 + value / 3) +> \\pattern1;
 });
 ";
 		actions = IdentityDictionary();
