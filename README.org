@@ -37,8 +37,7 @@ Residency project of Konstantinos Vasilakos.
    - Install ChucK
 3. Download the =tiny-sc= library from: https://github.com/iani/tiny-sc/archive/master.zip
 4. Download the =tiny-sc-addons= library from: https://github.com/iani/tiny-sc-addons (this contains additional UGen plugins needed for onset tracking).
-5. Download the =sculpt= library from: https://github.com/eastn/sculpt/releases/tag/test_release_for_workshop<n>
-   _(Where <n> is the latest, uppermost number of release.)_
+5. Download the =sculpt= library from: https://github.com/eastn/sculpt/releases/tag/release_for_workshop01
 6. Start SuperCollider
 7. From the SuperCollider menu =File=, choose item "Open user support directory".
 8. In the folder named =SuperCollider= that is opened by this item, create a new subfolder named "Extensions".
