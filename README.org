@@ -9,7 +9,7 @@ Residency project of Konstantinos Vasilakos.
 
 1. Tangibility, Live Coding, Phsyical Models, Gestures
 
-2. Live Coding with SuperCollider
+2. Live Coding and Incremental Sound Design with SuperCollider
 
 3. Controlling ChucK through SuperCollider
 
@@ -27,7 +27,7 @@ Residency project of Konstantinos Vasilakos.
 - ChucK code files.
 - Config files for LeapMotion.
 - Design and help doc.
-- Files for the workshop
+- Files for the workshop (in folder "WorkshopExamples").
 
 * Installation instructions for workshop
 
@@ -35,9 +35,9 @@ Residency project of Konstantinos Vasilakos.
    - Install SuperCollider
 2. Download ChucK from: http://chuck.cs.princeton.edu/release/
    - Install ChucK
-3. Download the =tiny-sc= library from: https://github.com/iani/tiny-sc/archive/master.zip
+3. Download the latest release of the =tiny-sc= library from this page: https://github.com/iani/tiny-sc/releases
 4. Download the =tiny-sc-addons= library from: https://github.com/iani/tiny-sc-addons (this contains additional UGen plugins needed for onset tracking).
-5. Download the =sculpt= library from: https://github.com/eastn/sculpt/releases/tag/release_for_workshop01
+5. Download the latest release of the =sculpt= library from this page: https://github.com/eastn/sculpt/releases
 6. Start SuperCollider
 7. From the SuperCollider menu =File=, choose item "Open user support directory".
 8. In the folder named =SuperCollider= that is opened by this item, create a new subfolder named "Extensions".
