@@ -46,11 +46,11 @@ while( true )
         // getFloat fetches the expected float (as indicated by "f")
         //oe.getInt() => int presetNum;
         // print
-        //<<< "got (via OSC): presetNum", presetNum  >>
-        oe.getFloat() => float freq;
+        //<<< "got (via OSC): presetNum", presetNum  >
         oe.getFloat() => float noteOn;
-        <<< "got (via OSC): FREQ", freq  >>>;
+        oe.getFloat() => float freq;
         <<< "got (via OSC): NoteON", noteOn  >>>;
+        <<< "got (via OSC): FREQ", freq  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!

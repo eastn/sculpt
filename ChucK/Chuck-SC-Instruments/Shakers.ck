@@ -4,15 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-VoicForm vox => dac;
+Shakers shakers => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/vox,f:freq,f:noteOn,i:phonemeNum,f:speak" => string instrTriggerMessage;
-
+"/shakers,f:noteOn,f:freq,i:preset,f:energy,f:decay" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -33,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/vox, f, f, i, f" ) @=> OscEvent oe;
+recv.event( "/shakers, f, f, i, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -42,34 +41,37 @@ while( true )
     // grab the next message from the queue. 
     while ( oe.nextMsg() != 0 )
     { 
-        // getFloat fetches the expected float (as indicated by "f")
-        //oe.getInt() => int presetNum;
-        // print
-        //<<< "got (via OSC): presetNum", presetNum  >>>;
-        oe.getFloat() => float freq;
+        
+        
         oe.getFloat() => float noteOn;
-        <<< "got (via OSC): FREQ", freq  >>>;
+        oe.getFloat() => float freq;
+        oe.getInt() => int preset;
         <<< "got (via OSC): NoteON", noteOn  >>>;
+        <<< "got (via OSC): FREQ", freq  >>>;
+        <<< "got (via OSC): preset", preset  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
         
-        oe.getInt() => vox.phonemeNum;
-        oe.getFloat() => vox.speak;
         
+        oe.getFloat() => shakers.energy;
+        oe.getFloat() => shakers.decay;
+       
         
         // print
         <<< "---", "" >>>;
-        <<< "phonemeNum:", vox.phonemeNum() >>>; //does not printing
-        //<<< ":", clar.noiseGain() >>>;
+        <<< "energy:", shakers.energy() >>>;
+        <<< "decay:", shakers.decay() >>>;
+       
         
-        // set freq
-        freq => vox.freq;
+        
+        // set freq & preset
+        freq => shakers.freq;
+        preset => shakers.preset;
         // go
         if ( noteOn >= 0 ) {
-            .8 => vox.noteOn;
+            .8 => shakers.noteOn;
         };
-        
     }
     // advance time
     // .5::second => now;
