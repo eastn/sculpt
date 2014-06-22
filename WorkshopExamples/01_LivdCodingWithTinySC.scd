@@ -32,20 +32,24 @@ The source can be:
 200 =>.fundfreq \sound1;
 
 /* 
-5. If the playing sound is a pattern, you can add or ovewrite exisitng 
-key-pattern pairs on the fly with the operator 
+(event) => \sound plays a pattern.
+If the playing sound is a pattern, you can add or ovewrite exisitng 
+key-pattern pairs on the fly with the operator +>
 */
 
-//: 5.1 Chuck a new key-pattern array to the sound
-//  The patterns included in the array replace the ones with the
-//  same name in the SynthTree, or are added to it.
 (dur: Prand([0.01, 0.2], inf), amp: Pseq([0.01, 0.1], inf)) => \sound1;
 
-//: Modify the pattern
+//: Modify the pattern: Chuck a new event to the sound.
+//  The patterns included in the event replace the ones with the
+//  same name in the SynthTree it.
 (degree: (0..8).prand, dur: 0.1, amp: [0.05, 0.1].pseq) +> \sound1;
 
 //: different instruments
 (instrument: \bassfoundation) +> \sound1;
+
+/*
+Routing sounds through effects / filters.
+*/
 
 //: Make a filter
 { Pan2.ar(RLPF.ar(Inp.ar, \freq.kr(800), \rq.kr(1)), \pos.kr(0)) } => \rlpf;
@@ -72,5 +76,4 @@ key-pattern pairs on the fly with the operator
 { LPF.ar(GrayNoise.ar(0.1*Decay.kr(Dust.kr(10))), \freq.kr(5000)) } => \sound1.fadeTime_(0.5);
 
 // Fadeout with custom duration
-\sound.fadeOut(12);
-
+\sound1.fadeOut(12);
