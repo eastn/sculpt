@@ -1,0 +1,66 @@
+* Shaker
+** Complete specs from site
+
+http://chuck.cs.princeton.edu/doc/program/ugen_full.html#StkInstrument
+
+Control Change Numbers:
+       - Shake Energy = 2
+       - System Decay = 4
+       - Number Of Objects = 11
+       - Resonance Frequency = 1
+       - Shake Energy = 128
+       - Instrument Selection = 1071
+        - Maraca = 0
+        - Cabasa = 1
+        - Sekere = 2
+        - Guiro = 3
+        - Water Drops = 4
+        - Bamboo Chimes = 5
+        - Tambourine = 6
+        - Sleigh Bells = 7
+        - Sticks = 8
+        - Crunch = 9
+        - Wrench = 10
+        - Sand Paper = 11
+        - Coke Can = 12
+        - Next Mug = 13
+        - Penny + Mug = 14
+        - Nickle + Mug = 15
+        - Dime + Mug = 16
+        - Quarter + Mug = 17
+        - Franc + Mug = 18
+        - Peso + Mug = 19
+        - Big Rocks = 20
+        - Little Rocks = 21
+        - Tuned Bamboo Chimes = 22
+
+    by Perry R. Cook, 1996 - 1999.
+extends StkInstrument
+(control parameters)
+.preset - ( int , READ/WRITE ) - select instrument (0 - 22; see above)
+.energy - ( float , READ/WRITE ) - shake energy [0.0 - 1.0]
+.decay - ( float , READ/WRITE ) - system decay [0.0 - 1.0]
+.objects - ( float , READ/WRITE ) - number of objects [0.0 - 128.0]
+(inherited from StkInstrument)
+.noteOn - ( float velocity ) - trigger note on
+.noteOff - ( float velocity ) - trigger note off
+.freq - ( float frequency ) - set/get frequency (Hz)
+.controlChange - ( int number, float value ) - assert control change
+
+** Summary - specifics for implementation
+Messages to send are:
+
+- preset (int)
+- energy (float)
+- decay (float)
+- objects (float, 1-128)
+- noteOn (float velocity)
+- noteOff (float velocity)
+- freq (float frequency)
+
+* Control change enables extended control - but not needed (?)
+http://chuck.cs.princeton.edu/doc/program/ugen_full.html#StkInstrument
+
+.controlChange - ( int number, float value ) - assert control change - numbers are instrument specific, value range: [0.0 - 128.0]
+
+From the notes above, all control parameters are covered by messages, so there seems to be no need to use controlChange.

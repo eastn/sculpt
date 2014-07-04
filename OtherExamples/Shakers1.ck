@@ -11,7 +11,7 @@ Shakers shakers => dac;
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/shakers,f:noteOn,i:preset,f:objects,f:freq,f:energy,f:decay" => string instrTriggerMessage;
+"/shakers1,f:noteOn,i:preset,f:objects,f:freq,f:energy,f:decay" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -32,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/shakers, f, i, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/shakers1, f, i, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -41,25 +41,19 @@ while( true )
     // grab the next message from the queue. 
     while ( oe.nextMsg() != 0 )
     { 
-        
-        
         oe.getFloat() => float noteOn;
         oe.getInt() => int preset;
         oe.getFloat() => float objects;
         oe.getFloat() => float freq;
-        <<< "got (via OSC): NoteON", noteOn  >>>;
-        <<< "got (via OSC): FREQ", freq  >>>;
-        <<< "got (via OSC): preset", preset  >>>;       
-           
-        // set freq & preset
+
         preset => shakers.preset;
         objects => shakers.objects;
         freq => shakers.freq;
         oe.getFloat() => shakers.energy;
         oe.getFloat() => shakers.decay;
-        // go
+
         if ( noteOn >= 0 ) {
-            .8 => shakers.noteOn;
+            noteOn => shakers.noteOn;
         };
     }
     // advance time

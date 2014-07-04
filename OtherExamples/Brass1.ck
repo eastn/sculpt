@@ -4,16 +4,14 @@
 // this instrument with patterns. 
 
 // patch
-Clarinet clar => dac;
+Brass brass => dac;
 
 ////////////////// OSC receiver ////////////////
 // create our OSC receiver
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/clar,f:freq,f:noteOn,f:reed,f:noiseGain,f:clear,f:vibratoFreq,f:vibratoGain,f:pressure,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
-
-//clear instrument control, doesn't give any explanation if it is floar or integer, I guess this must be an integer 0 - 1.
+"/brass1,f:noteOn,f:freq,f:lip,f:slide,f:vibratoFreq,f:vibratoGain,f:volume,f:clear,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
@@ -34,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/clar, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/brass1, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -47,44 +45,42 @@ while( true )
         //oe.getInt() => int presetNum;
         // print
         //<<< "got (via OSC): presetNum", presetNum  >>>;
-        oe.getFloat() => float freq;
         oe.getFloat() => float noteOn;
+        oe.getFloat() => float freq;
         <<< "got (via OSC): FREQ", freq  >>>;
-        <<< "got (via OSC): NoteON", noteOn  >>>;
+         <<< "got (via OSC): NoteOn", noteOn  >>>;
         // set play pointer to beginning
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => clar.reed;
-        oe.getFloat() => clar.noiseGain;
-        oe.getInt() => clar.clear;
-        oe.getFloat() => clar.vibratoFreq;
-        oe.getFloat() => clar.vibratoGain;
-        oe.getFloat() => clar.pressure;
-        oe.getFloat() => clar.startBlowing;
-        oe.getFloat() => clar.stopBlowing;
-        oe.getFloat() => clar.rate;
+        oe.getFloat() => brass.lip;
+        oe.getFloat() => brass.slide;
+        oe.getFloat() => brass.vibratoFreq;
+        oe.getFloat() => brass.vibratoGain;
+        oe.getFloat() => brass.volume;
+        oe.getFloat() => brass.clear;
+        oe.getFloat() => brass.startBlowing;
+        oe.getFloat() => brass.stopBlowing;
+        oe.getFloat() => brass.rate;
         
         // print
         <<< "---", "" >>>;
-        <<< "reed:", clar.reed() >>>;
-        <<< "noiseGain:", clar.noiseGain() >>>;
-        //<<< "clear:", clar.clear() >>>; //Write Only ?? (lacks of documentation).
-        <<< "vibratoFreq:", clar.vibratoFreq() >>>;
-        <<< "vibratoGain:", clar.vibratoGain() >>>;
-        <<< "pressure:", clar.pressure() >>>;
-        //<<< "startBlowing:", clar.startBlowing() >>>; //Write Only!
-        //<<< "stopBlowing:", clar.stopBlowing() >>>;   //Write Only!
-        <<< "rate:", clar.rate() >>>;
+        <<< "lip:", brass.lip() >>>;
+        <<< "slide:", brass.slide() >>>;
+        <<< "vibratoFreq:", brass.vibratoFreq() >>>;
+        <<< "vibratoGain:", brass.vibratoGain() >>>;
+        <<< "volume:", brass.volume() >>>;
+        //<<< "clear:", brass.clear() >>>; //Write Only!
+        //<<< "startBlowing:", brass.startBlowing() >>>; //Write Only!
+        //<<< "stopBlowing:", brass.stopBlowing() >>>;   //Write Only!
+        <<< "rate:", brass.rate() >>>;
         
         // set freq
-        freq => clar.freq;
+        freq => brass.freq;
         // go
         if ( noteOn >= 0 ) {
-            <<< "note on" >>>;
-            .8 => clar.noteOn;
+            .8 => brass.noteOn;
         };
-
     }
     // advance time
     // .5::second => now;
