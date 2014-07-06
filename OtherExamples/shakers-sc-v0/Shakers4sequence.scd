@@ -1,13 +1,56 @@
 
 Pdef('/shakers4',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers4', 
-	\dur, 0.125, 
+	\dur, 0.1, 
 	'noteOn', 0.1, 
-	'preset', 0, 
+	'preset', 21, 
 	'objects', 1, 
-	'freq', 600, 
-	'energy',0.5, 
-	'decay', 0.5)).play;
+	'freq', (10, 11 ..300).pseq, 
+	'energy',0.01, 
+	'decay', 0.05)).play;
+
+//:
+
+Pdef('/shakers4',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers4', 
+	\dur, 0.1, 
+	'noteOn', 0.1, 
+	'preset', 20, 
+	'objects', 1, 
+	'freq', (10, 11 ..300).pseq, 
+	'energy',0.01, 
+	'decay', 0.05)).play;
+
+//:
+
+Pdef('/shakers4',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers4', 
+	\dur, 0.1, 
+	'noteOn', 0.1, 
+	'preset', 19, 
+	'objects', 1, 
+	'freq', (10, 11 ..300).pseq, 
+	'energy',0.01, 
+	'decay', 0.05)).play;
+
+//:
+
+Pdef('/shakers4',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers4', 
+	\dur, 0.1, 
+	'noteOn', 0.1, 
+	'preset', Pstutter(50, (0..22).pseq), 
+	'objects', 1, 
+	'freq', (10, 11 ..300).pseq, 
+	'energy',0.01, 
+	'decay', 0.05)).play;
+//:
+
+
+
+
+
+
 
 //:
 Pdef('/shakers4',

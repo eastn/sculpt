@@ -1,11 +1,21 @@
-
+Pdef('/shakers2').stop;
 Pdef('/shakers2',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers2', 
-	\dur, 0.125, 
+	\dur, 1, 
 	'noteOn', 0.1, 
-	'preset', 0, 
+	'preset', 22, 
 	'objects', 1, 
 	'freq', 100, 
+	'energy',0.5, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers2',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers2', 
+	\dur, 1, 
+	'noteOn', 0.1, 
+	'preset', 22, 
+	'objects', 1, 
+	'freq', [10, 100, 200, 1000].prand, 
 	'energy',0.5, 
 	'decay', 0.5)).play;
 //:

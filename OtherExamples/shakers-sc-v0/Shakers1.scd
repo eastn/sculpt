@@ -9,7 +9,7 @@ NetAddr.localAddr;
 Pdef('/shakers1',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
 	\dur, [0.125 pn: 16, 0.25, 0.5, 1.0, 2.0].pseq, 
-	'noteOn', [2.91 pn: 16].prand, 
+	'noteOn', 0.01, 
 	'preset', [3, 4, 5, 6, 7, 8, 9, 10, 20, 22].pseq, 
 	'objects', [1, 50, 100].prand, 
 	'freq', (100, 200 .. 12000).prand, 

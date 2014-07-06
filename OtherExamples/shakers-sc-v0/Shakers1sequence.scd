@@ -1,3 +1,30 @@
+/*
+        - Maraca = 0
+        - Cabasa = 1
+        - Sekere = 2
+        - Guiro = 3         DO NOT USE
+        - Water Drops = 4   DO NOT USE
+        - Bamboo Chimes = 5 DO NOT USE
+        - Tambourine = 6
+        - Sleigh Bells = 7
+        - Sticks = 8        DO NOT USE
+        - Crunch = 9
+        - Wrench = 10
+        - Sand Paper = 11
+        - Coke Can = 12
+        - Next Mug = 13
+        - Penny + Mug = 14
+        - Nickle + Mug = 15
+        - Dime + Mug = 16
+        - Quarter + Mug = 17
+        - Franc + Mug = 18
+        - Peso + Mug = 19
+        - Big Rocks = 20
+        - Little Rocks = 21
+        - Tuned Bamboo Chimes = 22
+*/
+Pdef('/shakers1').stop;
+//:
 
 Pdef('/shakers1',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
@@ -8,7 +35,91 @@ Pdef('/shakers1',
 	'freq', 600, 
 	'energy',0.5, 
 	'decay', 0.5)).play;
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.125, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 1, 
+	'freq', (100, 200 .. 600).pseq, 
+	'energy',0.5, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.125, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 1, 
+	'freq', (100, 200 .. 6000).pseq, 
+	'energy',0.5, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.125, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 1, 
+	'freq', (100, 200 .. 600).prand, 
+	'energy',0.5, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.125, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 1, 
+	'freq', (100, 200 .. 600).prand, 
+	'energy', Pfunc({ 0.01 exprand: 0.9 }), 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.05, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 1, 
+	'freq', (100, 200 .. 600).prand, 
+	'energy', Pfunc({ 0.01 exprand: 0.9 }), 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.05, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', Pfunc({ 1 exprand: 120 }), 
+	'freq', (100, 200 .. 600).prand, 
+	'energy', Pfunc({ 0.01 exprand: 0.9 }), 
+	'decay', 0.5)).play;
+//:
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.05, 
+	'noteOn', 0.1, 
+	'preset', 1, 
+	'objects', Pfunc({ 1 exprand: 120 }), 
+	'freq', (100, 200 .. 600).prand, 
+	'energy', Pfunc({ 0.01 exprand: 0.9 }), 
+	'decay', 0.5)).play;
 
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.05, 
+	'noteOn', 0.1, 
+	'preset', Pfunc({ 20.rand }), 
+	'objects', Pfunc({ 1 exprand: 120 }), 
+	'freq', (100, 200 .. 600).prand, 
+	'energy', Pfunc({ 0.01 exprand: 0.09 }), 
+	'decay', 0.5)).play;
+
+
+//:
 Pdef('/shakers1',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
 	\dur, 0.125, 
@@ -18,6 +129,19 @@ Pdef('/shakers1',
 	'freq', 600, 
 	'energy',0.5, 
 	'decay', 0.5)).play
+
+//:
+Pdef('/shakers1',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers1', 
+	\dur, 0.05, 
+	'noteOn', 0.1, 
+	'preset', [0, 1].pseq, 
+	'objects', 1, 
+	'freq', 600, 
+	'energy',0.5, 
+	'decay', 0.5)).play;
+
+//:
 
 //:
 Pdef('/shakers1',

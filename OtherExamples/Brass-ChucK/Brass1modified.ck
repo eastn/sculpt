@@ -11,13 +11,13 @@ Brass brass => dac;
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/brass2,f:noteOn,f:freq,f:lip,f:slide,f:vibratoFreq,f:vibratoGain,f:volume,f:clear,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
+"/brass1,f:noteOn,f:freq,f:lip,f:slide,f:vibratoFreq,f:vibratoGain,f:volume,f:clear,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
 
 // Prepare to send to SuperCollider
-sender.setHost("localhost", 57121);
+sender.setHost("localhost", 57120);
 
 // Preformat the message to be sent
 sender.startMsg("/c_instr, s");
@@ -32,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/brass2, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/brass1, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
@@ -53,15 +53,20 @@ while( true )
         // 0 => buf.pos;
         // ding!
         
-        oe.getFloat() => brass.lip;
-        oe.getFloat() => brass.slide;
-        oe.getFloat() => brass.vibratoFreq;
-        oe.getFloat() => brass.vibratoGain;
+//        oe.getFloat() => brass.lip;
+0.00007 => brass.lip;
+//        oe.getFloat() => brass.slide;
+0.91 => brass.slide;
+        
+//        oe.getFloat() => brass.vibratoFreq;
+10.0 => brass.vibratoFreq;
+//        oe.getFloat() => brass.vibratoGain;
+0.4 => brass.vibratoGain;
         oe.getFloat() => brass.volume;
-        oe.getFloat() => brass.clear;
-        oe.getFloat() => brass.startBlowing;
-        oe.getFloat() => brass.stopBlowing;
-        oe.getFloat() => brass.rate;
+       // oe.getFloat() => brass.clear;
+        // oe.getFloat() => brass.startBlowing;
+        // oe.getFloat() => brass.stopBlowing;
+        // oe.getFloat() => brass.rate;
         
         // print
         <<< "---", "" >>>;
@@ -79,7 +84,7 @@ while( true )
         freq => brass.freq;
         // go
         if ( noteOn >= 0 ) {
-            .8 => brass.noteOn;
+            .2 => brass.noteOn;
         };
     }
     // advance time

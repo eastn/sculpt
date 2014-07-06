@@ -1,4 +1,5 @@
-
+Pdef('/shakers3').stop;
+//:
 Pdef('/shakers3',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers3', 
 	\dur, 0.125, 
@@ -6,8 +7,50 @@ Pdef('/shakers3',
 	'preset', 0, 
 	'objects', 1, 
 	'freq', 600, 
-	'energy',0.5, 
+	'energy',0.05, 
 	'decay', 0.5)).play;
+//:
+Pdef('/shakers3',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers3', 
+	\dur, 0.125, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 21, 
+	'freq', [60, 600].pseq, 
+	'energy',0.05, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers3',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers3', 
+	\dur, 0.125, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 21, 
+	'freq', [60, 600].prand, 
+	'energy',0.05, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers3',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers3', 
+	\dur, [0.125, 0.5].prand, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 21, 
+	'freq', [60, 600].prand, 
+	'energy',0.05, 
+	'decay', 0.5)).play;
+//:
+Pdef('/shakers3',
+ Pbind(\type, \chuckInstrument, \instrument, '/shakers3', 
+	\dur, [0.125, 0.5, (0.125/2) pn: 16].prand, 
+	'noteOn', 0.1, 
+	'preset', 0, 
+	'objects', 21, 
+	'freq', [60, 120, 240, 320, 480, 600].prand, 
+	'energy',0.05, 
+	'decay', 0.5)).play;
+//:
+
 
 Pdef('/shakers3',
  Pbind(\type, \chuckInstrument, \instrument, '/shakers3', 

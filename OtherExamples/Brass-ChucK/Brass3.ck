@@ -11,13 +11,13 @@ Brass brass => dac;
 
 // This is the message+format that the osc receiver listens to
 // and which triggers the instrument to play.
-"/brass4,f:noteOn,f:freq,f:lip,f:slide,f:vibratoFreq,f:vibratoGain,f:volume,f:clear,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
+"/brass3,f:noteOn,f:freq,f:lip,f:slide,f:vibratoFreq,f:vibratoGain,f:volume,f:clear,f:startBlowing,f:stopBlowing,f:rate" => string instrTriggerMessage;
 
 // This sender will notify Supercollider that a new instrument is listening
 OscSend sender;
 
 // Prepare to send to SuperCollider
-sender.setHost("localhost", 57121);
+sender.setHost("localhost", 57120);
 
 // Preformat the message to be sent
 sender.startMsg("/c_instr, s");
@@ -32,7 +32,7 @@ OscRecv recv;
 recv.listen();
 
 // create an address in the receiver, store in new variable
-recv.event( "/brass4, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
+recv.event( "/brass3, f, f, f, f, f, f, f, f, f, f, f" ) @=> OscEvent oe;
 
 // infinite time loop
 while( true )
